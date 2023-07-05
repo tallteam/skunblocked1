@@ -132,6 +132,11 @@ function firebaseLogEventWithParam(eventName, p, v)
   if(firebaseSupported) firebase.analytics().logEvent(eventName, { [p]: v});
 }
 
+function firebaseLogEventWithParamDict(eventName, paramsDict)
+{
+  if(firebaseSupported) firebase.analytics().logEvent(eventName, paramsDict);
+}
+
 var fs = false;
 function toggleFullscreen()
 {
@@ -177,7 +182,7 @@ function isFullscreen()
   {
     onNextMouseUp(function () {
       console.log("openPrivacyUrl onNextMouseUp");
-      if(playwireEnabled)
+      if(isPlaywireEnabled())
       {
         window.open("https://smashkarts.io/privacy/privacyPW.html", "_blank");
       }
@@ -223,4 +228,3 @@ function isFullscreen()
   {
     location.reload();
   }
-

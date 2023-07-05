@@ -147,7 +147,14 @@ function tryShowRewardedInterstitial(unusedParam)
 {
     if (!isMobile())
     {
-        crazysdk.requestAd('rewarded');
+        if(!window.adblockDetected)
+        {
+            crazysdk.requestAd('rewarded');
+        }
+        else
+        {
+            interstitialNoFill();
+        }
     }
 }
 

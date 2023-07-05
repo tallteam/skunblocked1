@@ -2,27 +2,8 @@
 <html lang="en-us">
 
 <head>
-	<script>
-		//AB TEST VARS
-		var playwireEnabled = true;
-		var playwireRampInitialised = false;
-
-		var pendingGoogleOptimiseABTestLoadDetails = null;
-	</script>
-
-	<script src="scripts/ads-offcanvas-vars.js"></script>
-
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z574SSVGGZ"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() { dataLayer.push(arguments); }
-		gtag('js', new Date());
-
-		gtag('config', 'G-Z574SSVGGZ');
-	</script>
-	<!-- Google site tag end -->
-
+	<script src="scripts/constants.js"></script>
+	
 	<!-- Required for AB Testing via Google Optimise -->
 	<script src="https://www.googleoptimize.com/optimize.js?id=OPT-W8QW63G"></script>
 
@@ -73,17 +54,6 @@
 		}
 	</script> -->
 	
-	<!-- Onesignal push notifications -->
-	<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-	<script>
-		var OneSignal = window.OneSignal || [];
-		OneSignal.push(function ()
-		{
-			OneSignal.init({
-				appId: "e618063a-f56d-448f-9dbf-c1bebb50f935",
-			});
-		});
-	</script>
 	<!-- Youtube Game Schema -->
 	<script type="application/ld+json">
 		{
@@ -122,119 +92,7 @@
 	<link rel="stylesheet" href="css/main.css" />
 	<meta name="viewport" content="minimal-ui, user-scalable=no, initial-scale=1, maximum-scale=1, width=device-width, viewport-fit=cover" />
 
-	<!-- AD INIT START -->
-	<script>
-		//Keep this in global scope
-		let adBreak;
-
-		if(!playwireEnabled)
-		{
-			//GOOGLE
-			window.googletag = window.googletag || { cmd: [] };
-			googletag.cmd.push(() =>
-			{
-				var url = (window.location != window.parent.location) ? document.referrer : document.location.href;
-				if (url.startsWith("https://smashkarts.io/") || url.startsWith("http://smashkarts.io/") ||
-						url.startsWith("https://www.smashkarts.io/") || url.startsWith("http://www.smashkarts.io/")
-						|| url.includes("smashkarts-dev.firebaseapp.com"))
-				{
-					(function ()
-					{
-						var afgads = document.createElement('script');
-						afgads.setAttribute("async", true);
-						afgads.setAttribute("type", "text/javascript");
-						afgads.setAttribute("data-ad-client", "ca-pub-1463476156508236");
-						afgads.setAttribute("src", "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js");
-						var node = document.getElementsByTagName('script')[0];
-						node.parentNode.insertBefore(afgads, node);
-					})();
-
-					window.adsbygoogle = window.adsbygoogle || [];
-					adBreak = adConfig = function (o) { adsbygoogle.push(o); };
-					adConfig({ preloadAdBreaks: "on", sound: "on" });
-				}
-			});
-
-			//ADINPLAY
-			window.aiptag = window.aiptag || { cmd: [] };
-			aiptag.cmd.display = aiptag.cmd.display || [];
-
-			// Show GDPR consent tool
-			aiptag.gdprShowConsentTool = true;
-			aiptag.gdprConsentToolPosition = "bottom";
-
-			var adinplayScript = document.createElement("script");
-			adinplayScript.type = "text/javascript";
-			adinplayScript.async = true;
-			adinplayScript.src = "//api.adinplay.com/libs/aiptag/pub/SHK/smashkarts.io/tag.min.js";
-			document.head.appendChild(adinplayScript);
-		}
-		else
-		{
-			//PLAYWIRE RAMP v1.0
-			// var ramp = {config: '//config.playwire.com/1024690/v2/websites/73592/banner.json' };
-			//
-			// var playwireScript = document.createElement("script");
-			// playwireScript.id = "ramp";
-			// playwireScript.type = "text/javascript";
-			// playwireScript.async = true;
-			// playwireScript.src = "//cdn.intergient.com/ramp.js";
-			// document.head.appendChild(playwireScript);
-
-			//PLAYWIRE RAMP v2.0
-			window.ramp = window.ramp || {};
-			window.ramp.que = window.ramp.que || [];
-			window.ramp.passiveMode = true;
-			window.ramp.onReady = function()
-			{
-				playwireRampInitialised = true;
-			};
-
-			window._pwGA4PageviewId = ''.concat(Date.now());
-			window.dataLayer = window.dataLayer || [];
-			window.gtag = window.gtag || function () {
-				dataLayer.push(arguments);
-			};
-			gtag('js', new Date());
-			gtag('config', 'G-F2WLE0BJLM', { 'send_page_view': false });
-			gtag(
-					'event',
-					'ramp_js',
-					{
-						'send_to': 'G-F2WLE0BJLM',
-						'pageview_id': window._pwGA4PageviewId
-					}
-			);
-
-			var playwireScript = document.createElement("script");
-			playwireScript.type = "text/javascript";
-			playwireScript.async = true;
-			playwireScript.src = "//cdn.intergient.com/1024690/73592/ramp.js";
-			document.head.appendChild(playwireScript);
-
-			//PLAYWIRE PRECONNECTS
-			addPreconnectLink("https://cdn.intergi.com", true);
-			addPreconnectLink("https://cdn.intergient.com", true);
-			addPreconnectLink("https://securepubads.g.doubleclick.net", true);
-			addPreconnectLink("https://cdn.playwire.com", true);
-			addPreconnectLink("https://z.moatads.com", true);
-
-			function addPreconnectLink(preconnectUrl, crossOriginEnabled)
-			{
-				var link = document.createElement('link');
-				link.rel = 'preconnect';
-				link.href = preconnectUrl;
-
-				if(crossOriginEnabled)
-				{
-					link.crossOrigin = 'anonymous';
-				}
-
-				document.head.appendChild(link);
-			}
-		}
-	</script>
-	<!-- AD INIT END -->
+	<script src="scripts/ads-init.js"></script>	
 </head>
 
 <body>
@@ -250,7 +108,8 @@
 
 				<!-- playwire -->
 				<div id="pw_mainmenu"></div>
-				<!-- <div data-pw-desk="med_rect_atf" data-pw-mobi="med_rect_atf"></div> -->
+				<!-- dummy placement to ensure rewarded videos init correctly when ads are disabled for season pass holders -->
+				<div id="pw_mainmenu_dummy" data-pw-desk="med_rect_atf" data-pw-mobi="med_rect_atf"></div> 
 			</div>
 			<div id="adContainerWin"> <!-- win ceremony -->
 				<div id="smashkarts-io_300x250_2"></div> <!-- adinplay -->
@@ -287,6 +146,7 @@
 		<div id="pw-video-container"> <!-- playwire -->
 			<div id="pw-video-placeholder"></div>
 		</div>
+		<iframe id="xsolla-iframe"></iframe>
 	</div>
 	<div id="rightContainer">
 		<div id="rightAdPlaceholder">
@@ -318,14 +178,13 @@
 
 <script src="scripts/main.js"></script>
 <script src="scripts/auth.js"></script>
-
+<script src="scripts/shop.js"></script>
+<script src="scripts/cc.js"></script>
+ 
 <script src="scripts/ads-common-logic.js"></script>
 <script src="scripts/ads-offcanvas-logic.js"></script>
 <script src="scripts/ads-positioning-logic.js"></script>
-<script>
-	var srcAdProvider = playwireEnabled ? "scripts/ads-pw.js" : "scripts/ads-adinplay.js";
-	document.write(`<script src=${srcAdProvider}><\/script>`);
-</script>
+<script src="scripts/ads-injector.js"></script>
 
 <script>
 	//Used for installing progressive web apps 
@@ -379,11 +238,11 @@
 
 	const buildUrl = "Build";
 
-	const loaderUrl = buildUrl + "/uv2.loader.js";
+	const loaderUrl = buildUrl + "/prox1.loader.js";
 	const config = {
-		dataUrl: buildUrl + "/35073ba045ee2e4679dadc7562e9f9ec.data.br",
-		frameworkUrl: buildUrl + "/42a3d49022697c23e44f43e1fb0644d5.js.br",
-		codeUrl: buildUrl + "/80b2f5c3c8ae2fd751c7fb726de2a489.wasm.br",
+		dataUrl: buildUrl + "/210a164f89b8c72c0f15e928d55db764.data.br",
+		frameworkUrl: buildUrl + "/dc9c38db10159720da6e948d77745e68.js.br",
+		codeUrl: buildUrl + "/92aabe7827a6f05de5c44c78dc7c2693.wasm.br",
 		// #if MEMORY_FILENAME
 		//         memoryUrl: buildUrl + "/",
 		// #endif
@@ -393,7 +252,7 @@
 		streamingAssetsUrl: "StreamingAssets",
 		companyName: "TallTeam",
 		productName: "Smash Karts",
-		productVersion: "2.0.4",
+		productVersion: "2.1.1",
 	};
 
 	var mainContainer = document.querySelector("#mainContainer");
@@ -467,9 +326,10 @@
 
 	function onUnityLoadComplete()
 	{
-		//set initial playwire enabled value in Unity
-		window.unityGame.SendMessage(unityFirebaseGameOjbectName, "SetPlaywireEnabled", playwireEnabled ? 1 : 0);
-
+		//tell unity what ad providers are enabled
+		window.unityGame.SendMessage(unityFirebaseGameOjbectName, "SetDisplayAdProvider", displayAdProvider);
+		window.unityGame.SendMessage(unityFirebaseGameOjbectName, "SetVideoAdProvider", videoAdProvider);
+		
 		trySendGoogleOptimiseABTestLoadedMessage();
 
 		trySendAdBlockDetectedMessage();
@@ -537,8 +397,9 @@
 
 			window.unityGame.SendMessage(unityFirebaseGameOjbectName, "OnGoogleOptimizeABTestLoaded", pendingGoogleOptimiseABTestLoadDetails);
 
-			//playwire could have been enabled via ab test
-			window.unityGame.SendMessage(unityFirebaseGameOjbectName, "SetPlaywireEnabled", playwireEnabled ? 1 : 0);
+			//tell unity what ad providers are enabled as they could have changed via ab test
+			window.unityGame.SendMessage(unityFirebaseGameOjbectName, "SetDisplayAdProvider", displayAdProvider);
+			window.unityGame.SendMessage(unityFirebaseGameOjbectName, "SetVideoAdProvider", videoAdProvider);
 
 			pendingGoogleOptimiseABTestLoadDetails = null;
 		}

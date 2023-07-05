@@ -15,6 +15,8 @@ const testBaitDelay = 1000;
 var adblockDetectedType;
 var pendingAdblockDetectedMessage;
 
+var isVideoAdPlaying; //used internally in ad provider scripts
+
 function createAdBlockBaitDiv(divId, classList)
 {
   var div = document.getElementById(divId);
@@ -229,6 +231,21 @@ function hideMainMenuBanner()
   }
 }
 
+//Used by playwire to ensure everything still gets initialised correctly for season pass holders 
+function showDummyMainMenuBanner()
+{
+  if(!offCanvasAdsEnabled)
+  {
+    hideWinCeremonyBanner();
+    hideLongBanner();
+    hideMainMenuBanner()
+
+    showAdContainer(divIdMainMenuBanner);
+    //updateAdSizes();
+    requestDummyMainMenuAd();
+  }
+}
+
 function showMainMenuBanner()
 {
   if(!offCanvasAdsEnabled)
@@ -340,6 +357,8 @@ function showWinCeremonyInterstitial(audioOn)
 
 function interstitialStart()
 {
+  isVideoAdPlaying = true;
+  
   window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialStart");
 
   if(offCanvasAdsEnabled)
@@ -350,6 +369,8 @@ function interstitialStart()
 
 function interstitialError()
 {
+  isVideoAdPlaying = false;
+
   window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialFailed");
 
   if(offCanvasAdsEnabled)
@@ -360,7 +381,21 @@ function interstitialError()
 
 function interstitialSkipped()
 {
+  isVideoAdPlaying = false;
+  
   window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialSkipped");
+
+  if(offCanvasAdsEnabled)
+  {
+    refreshAllOffCanvasAds();
+  }
+}
+
+function interstitialNoFill()
+{
+  isVideoAdPlaying = false;
+  
+  window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialNoFill");
 
   if(offCanvasAdsEnabled)
   {
@@ -370,6 +405,8 @@ function interstitialSkipped()
 
 function interstitialComplete()
 {
+  isVideoAdPlaying = false;
+  
   window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialComplete");
 
   if(offCanvasAdsEnabled)
