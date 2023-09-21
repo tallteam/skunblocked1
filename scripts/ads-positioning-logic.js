@@ -16,6 +16,7 @@ function updateAdSizes()
     {
       updateMainMenuBanner();
       updateWinBanner();
+      updateSpectateBanner();
     }
   }
 }
@@ -80,6 +81,36 @@ function updateWinBanner()
   }
 }
 
+var spectateBanner;
+const defaultSpectateScaleStr = "scale(100%, 100%)";
+const defaultSpectateTranslateStr = "translate(0px, 0px)"; //"translate(0px, -50%)"
+function updateSpectateBanner()
+{
+  if(spectateBanner == null)
+  {
+    spectateBanner = document.getElementById(divIdSpectateBanner);
+  }
+
+  if(spectateBanner != null && spectateBanner.style.display !== "none")
+  {
+    var adContainerW = spectateBanner.offsetWidth;
+    var adContainerH = spectateBanner.offsetHeight;
+    var gameContainerH = gameContainer.offsetHeight;
+
+    if(adContainerH/gameContainerH > 0.75)
+    {
+      var newHeight = gameContainerH * 0.75;
+      var newScale = newHeight / adContainerH;
+      var scaleString = "scale( " + newScale + "," + newScale + ")";
+      spectateBanner.style.transform = `${scaleString} ${defaultSpectateTranslateStr}`;
+    }
+    else
+    {
+      spectateBanner.style.transform =  `${defaultSpectateScaleStr} ${defaultSpectateTranslateStr}`
+    }
+  }
+}
+
 var longBanner;
 function updateLongBanner()
 {
@@ -89,7 +120,8 @@ function updateLongBanner()
 
     if(isMobile() && longBanner != null)
     {
-      longBanner.style.justifyContent = "center";
+      //revert from right to center for mobile
+      longBanner.style.right = "auto"; 
     }
   }
 
@@ -97,8 +129,9 @@ function updateLongBanner()
   {
     longBanner.style.bottom = 0 + "px";
     //longBanner.style.width = 100 + "vw";
-    longBanner.style.width = gameContainer.offsetWidth + "px";
+    //longBanner.style.width = gameContainer.offsetWidth + "px";
 
+    var adContainerW = longBanner.offsetWidth;
     var adContainerH = longBanner.offsetHeight;
     var gameContainerH = gameContainer.offsetHeight;
 
@@ -109,20 +142,22 @@ function updateLongBanner()
     }
     else
     {
-      if(adContainerH/gameContainerH > 0.3)
+      //reserve 30% screen height for horizontal ads, 75% for vertical ads
+      let heightPercentage = (adContainerW > adContainerH) ? 0.3 : 0.75;
+
+      if(adContainerH/gameContainerH > heightPercentage)
       {
-        var newHeight = gameContainerH * 0.3;
-        var newScale = newHeight / adContainerH;
-        var scaleString = "scale( " + newScale + "," + newScale + ")";
-        //var offsetX = 0;
-        var offsetX = (adContainerW - adContainerW*newScale)/2 - 10;
-        var offsetY = (adContainerH - adContainerH*newScale)/2 - 10;
-        var translateString = "translate(" + offsetX + "px, " + offsetY + "px)";
+        const newHeight = gameContainerH * heightPercentage;
+        const newScale = newHeight / adContainerH;
+        const scaleString = "scale( " + newScale + "," + newScale + ")";
+        //const offsetX = 0;
+        const offsetX = (adContainerW - adContainerW*newScale)/2 - 10;
+        const offsetY = (adContainerH - adContainerH*newScale)/2 - 10;
+        const translateString = "translate(" + offsetX + "px, " + offsetY + "px)";
         longBanner.style.transform = translateString + " " + scaleString;
       }
       else
       {
-        //longBanner.style.transform =  "scale( 1, 1) translate(0px, -10px)";
         longBanner.style.transform =  "scale( 1, 1) translate(-10px, -10px)";
       }
     }

@@ -22,6 +22,15 @@ async function buyProduct(productId)
   }
 }
 
+async function openStoreWindoWithToken(productId, token, orderId)
+{
+  var url = shopUrl + "/paystation3/?access_token=" + token;
+  currentOrderId = orderId;
+  currentProductId = productId;
+  openStoreWindowInFrame(url);
+}
+
+
 async function openStoreWindowInFrame(url)
 {
   var elem = document.getElementById("xsolla-iframe");

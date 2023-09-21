@@ -86,6 +86,10 @@ function destroyWinCeremonyAd()
     hideAllAdUnits();
 }
 
+//stubs
+function requestSpectateAd() {}
+function destroySpectateAd() {}
+
 function requestDeathAd()
 {
     rampDisplayAdUnit("ondeath", "pw_ondeath", "leaderboard_atf");

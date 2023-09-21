@@ -118,6 +118,9 @@
 				<div id="pw_roundend"></div>
 				<!-- <div data-pw-desk="med_rect_btf" data-pw-mobi="med_rect_btf"></div> -->
 			</div>
+			<div id="adContainerSpectate"> <!-- spectate -->
+				<div id="smashkarts-io_300x250_3"></div> <!-- adinplay -->
+			</div>
 			<div id="adContainerDeath"> <!-- death -->
 
 				<!-- adinplay -->
@@ -128,10 +131,6 @@
 				<div id="pw_ondeath"></div>
 				<!-- <div data-pw-desk="leaderboard_atf" data-pw-mobi="leaderboard_atf"></div> -->
 			</div>
-			<div id="videoAdContainer">
-				<div id="preroll"></div>
-			</div>
-
 		</div>
 		<div id="btmContainer">
 			<div id="btmAdPlaceholder">
@@ -146,6 +145,7 @@
 		<div id="pw-video-container"> <!-- playwire -->
 			<div id="pw-video-placeholder"></div>
 		</div>
+		<div id="preroll"></div> <!-- adinplay -->
 		<iframe id="xsolla-iframe"></iframe>
 	</div>
 	<div id="rightContainer">
@@ -237,11 +237,11 @@
 
 	const buildUrl = "https://smashkartsgc.b-cdn.net/Build2020New";
 
-	const loaderUrl = buildUrl + "/prox1.loader.js";
+	const loaderUrl = buildUrl + "/SmashKarts_np6.loader.js";
 	const config = {
-		dataUrl: buildUrl + "/210a164f89b8c72c0f15e928d55db764.data.br",
-		frameworkUrl: buildUrl + "/dc9c38db10159720da6e948d77745e68.js.br",
-		codeUrl: buildUrl + "/92aabe7827a6f05de5c44c78dc7c2693.wasm.br",
+		dataUrl: buildUrl + "/f37cbeb042ce29d347d5e8b55a91e472.data.br",
+		frameworkUrl: buildUrl + "/bfea129878b1695e48b98405e92979e8.js.br",
+		codeUrl: buildUrl + "/b727b891dd994a38943c8b09dd35d006.wasm.br",
 		// #if MEMORY_FILENAME
 		//         memoryUrl: buildUrl + "/",
 		// #endif
@@ -251,7 +251,7 @@
 		streamingAssetsUrl: "StreamingAssets",
 		companyName: "TallTeam",
 		productName: "Smash Karts",
-		productVersion: "2.1.1",
+		productVersion: "2.1.9",
 	};
 
 	var mainContainer = document.querySelector("#mainContainer");

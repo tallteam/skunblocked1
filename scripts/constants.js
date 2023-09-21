@@ -8,7 +8,7 @@ const AdProviderPlaywire = "Playwire";
 const AdProviderGoogleH5Games = "GoogleH5Games";
 const AdProviderAdinplay = "AdinPlay";
 var displayAdProvider = AdProviderAdinplay;
-var videoAdProvider = AdProviderGoogleH5Games;
+var videoAdProvider = AdProviderAdinplay;
 
 var playwireRampInitialised = false;
 
@@ -19,7 +19,7 @@ function isPlaywireEnabled()
 
 function isAdinPlayEnabled()
 {
-  return displayAdProvider === AdProviderAdinplay;
+  return displayAdProvider === AdProviderAdinplay || videoAdProvider === AdProviderAdinplay;
 }
 
 function isGoogleH5GamesEnabled()

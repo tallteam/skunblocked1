@@ -9,6 +9,7 @@ document.head.appendChild(baitScript);
 //globals
 const divIdMainMenuBanner = "adContainerMainMenu";
 const divIdWinCeremonyBanner = "adContainerWin";
+const divIdSpectateBanner = "adContainerSpectate";
 const divIdDeathBanner = "adContainerDeath";
 
 const testBaitDelay = 1000;
@@ -238,7 +239,8 @@ function showDummyMainMenuBanner()
   {
     hideWinCeremonyBanner();
     hideLongBanner();
-    hideMainMenuBanner()
+    hideMainMenuBanner();
+    hideSpectateBanner();
 
     showAdContainer(divIdMainMenuBanner);
     //updateAdSizes();
@@ -252,6 +254,7 @@ function showMainMenuBanner()
   {
     hideWinCeremonyBanner();
     hideLongBanner();
+    hideSpectateBanner();
 
     showAdContainer(divIdMainMenuBanner);
     //updateAdSizes();
@@ -274,10 +277,34 @@ function showWinCeremonyBanner(interstialRequested)
   {
     hideLongBanner();
     hideMainMenuBanner();
+    hideSpectateBanner();
 
     showAdContainer(divIdWinCeremonyBanner);
     //updateAdSizes();
     requestWinCeremonyAd(interstialRequested);
+  }
+}
+
+function hideSpectateBanner()
+{
+  if(!offCanvasAdsEnabled)
+  {
+    hideAdContainer(divIdSpectateBanner);
+    destroySpectateAd();
+  }
+}
+
+function showSpectateBanner()
+{
+  if(!offCanvasAdsEnabled)
+  {
+    hideLongBanner();
+    hideMainMenuBanner();
+    hideWinCeremonyBanner();
+
+    showAdContainer(divIdSpectateBanner);
+    //updateAdSizes();
+    requestSpectateAd();
   }
 }
 
@@ -347,12 +374,18 @@ function showLongBanner()
 
 function showPreGameInterstitial(audioOn)
 {
-  showInterstitial(audioOn, 'start', 'pregame');
+  if(!window.adblockDetected)
+  {
+    showInterstitial(audioOn, 'start', 'pregame');
+  }
 }
 
 function showWinCeremonyInterstitial(audioOn)
 {
-  showInterstitial(audioOn, 'next', 'winceremony')
+  if(!window.adblockDetected)
+  {
+    showInterstitial(audioOn, 'next', 'winceremony')
+  }
 }
 
 function interstitialStart()

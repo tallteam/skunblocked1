@@ -53,9 +53,19 @@ if(isPlaywireEnabled())
 //ADINPLAY
 if(isAdinPlayEnabled())
 {
-    var adinplayDisplayScript = document.createElement("script");
-    adinplayDisplayScript.src = "scripts/ads-adinplay-display.js";
-    document.body.appendChild(adinplayDisplayScript);
+    if(displayAdProvider === AdProviderAdinplay)
+    {
+        var adinplayDisplayScript = document.createElement("script");
+        adinplayDisplayScript.src = "scripts/ads-adinplay-display.js";
+        document.body.appendChild(adinplayDisplayScript);
+    }
+    
+    if(videoAdProvider === AdProviderAdinplay)
+    {
+        var adinplayVideoScript = document.createElement("script");
+        adinplayVideoScript.src = "scripts/ads-adinplay-video.js";
+        document.body.appendChild(adinplayVideoScript);
+    }
 }
 
 //GOOGLE H5 GAMES

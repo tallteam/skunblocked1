@@ -4,6 +4,7 @@
 //ad tags
 const adTagMainMenuBanner = "smashkarts-io_300x250";
 const adTagWinCeremonyBanner = "smashkarts-io_300x250_2";
+const adTagSpectateBanner = "smashkarts-io_300x250_3";
 const adTagLongBannerWeb = "smashkarts-io_728x90-new";
 const adTagLongBannerMobile = "smashkarts-io_320x100";
 
@@ -78,6 +79,23 @@ function requestWinCeremonyAd(interstialRequested)
 function destroyWinCeremonyAd()
 {
     hideAd(adTagWinCeremonyBanner);
+}
+
+function requestSpectateAd()
+{
+    if(!isMobile())
+    {
+        aiptag.cmd.display.push(function()
+        {
+            aipDisplayTag.display(adTagSpectateBanner);
+            showAd(adTagSpectateBanner);
+        });
+    }
+}
+
+function destroySpectateAd()
+{
+    hideAd(adTagSpectateBanner);
 }
 
 function requestDeathAd()

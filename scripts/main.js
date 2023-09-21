@@ -8,14 +8,6 @@ function setV(val2)
     }
 }
 
-function getReferrerUrl()
-{
-  var url = (window.location != window.parent.location)
-    ? document.referrer
-    : document.location.href;
-    return url;
-}
-
 function isMobile()
 {
   var isMobile = RegExp(/Android|webOS|iPhone|iPod|iPad/i).test(navigator.userAgent);
@@ -185,6 +177,10 @@ function isFullscreen()
       if(isPlaywireEnabled())
       {
         window.open("https://smashkarts.io/privacy/privacyPW.html", "_blank");
+      }
+      else if(isAdinPlayEnabled())
+      {
+        window.open("https://smashkarts.io/privacy/privacyAdinplay.html", "_blank");
       }
       else
       {

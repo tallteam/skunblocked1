@@ -15,6 +15,15 @@ body {
     overflow: hidden;
 }
 
+#xsolla-iframe {
+    position: absolute;
+    width: 820px;
+    height: 100%;
+    left: 50.5%;
+    display: none;
+    transform: translate(-50%, 0%);
+}
+
 
 #mainContainer {
     display: flex;

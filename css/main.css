@@ -53,6 +53,7 @@ body {
 
 #gameContainer {
     display: flex;
+    justify-content: center;
 }
 
 #gameCanvas {
@@ -160,18 +161,6 @@ body {
     filter: drop-shadow(2px 2px 0px #2050A9);
 }
 
-/* #adContainerDeath {
-    display: none;
-    --shown_display: flex;
-    position: absolute;
-    z-index: 100;
-    bottom: 0px;
-    width: 100vw;
-    height: fit-content;
-    align-items: center;
-    justify-content: center;			
-} */
-
 #adContainerDeath {
     display: none;
     --shown_display: flex;
@@ -179,10 +168,10 @@ body {
     /* border: 1px solid red; */
     z-index: 100;
     bottom: 0px;
-    width: 100vw;
+    right: 0px; /* removed on the fly to center for mobile */
+    width: fit-content;
     height: fit-content;
     align-items: center;
-    justify-content: end; /* updated on the fly to center for mobile */
 }
 
 #adContainerMainMenu {
@@ -221,6 +210,19 @@ body {
 } */
 
 #adContainerWin {
+    display: none;
+    --shown_display: block;
+    position: absolute;
+    transform-origin: right bottom;
+    /* border: 1px solid red; */
+    z-index: 100;
+    bottom: 10px;
+    right: 10px;
+    width: auto;
+    height: auto;
+}
+
+#adContainerSpectate {
     display: none;
     --shown_display: block;
     position: absolute;

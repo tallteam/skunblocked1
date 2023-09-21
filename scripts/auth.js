@@ -291,7 +291,7 @@ function updateValueTT(nodeKey, jsonData)
 var cloudFunctionSuccess = 0;
 var cloudFunctionFail = 0;
 
-var regions = ["us-east1", "us-central1", "europe-west1"];
+var regions = ["us-central1", "us-east1", "europe-west1"];
 var lastError = "internal";
 
 async function callCloudFunction(functionId, jsonData, key)

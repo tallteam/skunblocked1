@@ -106,6 +106,10 @@ function requestWinCeremonyAd(interstialRequested)
     }
 }
 
+//stubs
+function destroySpectateAd() {} 
+function requestSpectateAd() {}
+
 function destroyDeathAd()
 {
     crazysdk.clearBanner(adTagLongBanner);
