@@ -9,7 +9,7 @@ function showInterstitial(audioOn, interstitialType, interstitialName)
 {
     if(!rampVideoPlayerInitialised())
     {
-        interstitialError();
+        interstitialError(false);
         return;
     }
 
@@ -30,7 +30,7 @@ function showInterstitial(audioOn, interstitialType, interstitialName)
 
             if (pwVideoCode !== undefined)
             {
-                interstitialStart();
+                interstitialStart(false);
 
                 setRewardedVideoMsgBoxEnabled(false);
 
@@ -44,9 +44,8 @@ function showInterstitial(audioOn, interstitialType, interstitialName)
                         isVideoAdPlaying = false;
 
                         ramp.closeRewardedVideo();
-
-                        //skip so as not to reward the user
-                        interstitialSkipped();
+                        
+                        interstitialComplete(false);
                     }
                 });
             }
@@ -54,14 +53,14 @@ function showInterstitial(audioOn, interstitialType, interstitialName)
             {
                 isVideoAdPlaying = false;
 
-                interstitialError();
+                interstitialError(false);
             }
 
         }).catch((error) =>
         {
             isVideoAdPlaying = false;
 
-            interstitialError();
+            interstitialError(false);
             
             var key = `getPlaywireRewardedVideoCodeNew_NonRewarded_${Date.now()}`;
 
@@ -100,7 +99,7 @@ function tryShowRewardedInterstitial(audioOn)
 {
     if(!rampVideoPlayerInitialised())
     {
-        interstitialNoFill();
+        interstitialNoFill(true);
         return;
     }
 
@@ -116,7 +115,7 @@ function tryShowRewardedInterstitial(audioOn)
 
             if (pwVideoCode !== undefined)
             {
-                interstitialStart();
+                interstitialStart(true);
 
                 setRewardedVideoMsgBoxEnabled(true);
 
@@ -134,11 +133,11 @@ function tryShowRewardedInterstitial(audioOn)
                         //if(response.adPlayed && response.rewardUser) 
                         if(response.adPlayed)
                         {
-                            interstitialComplete();
+                            interstitialComplete(true);
                         }
                         else
                         {
-                            interstitialNoFill();
+                            interstitialNoFill(true);
                         }
                     }
                 });
@@ -147,14 +146,14 @@ function tryShowRewardedInterstitial(audioOn)
             {
                 isVideoAdPlaying = false;
 
-                interstitialError();
+                interstitialError(true);
             }
 
         }).catch((error) =>
         {
             isVideoAdPlaying = false;
 
-            interstitialError();
+            interstitialError(true);
 
             var key = `getPlaywireRewardedVideoCodeNew_${Date.now()}`;
 

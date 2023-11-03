@@ -64,7 +64,7 @@ if(isPlaywireEnabled())
         dataLayer.push(arguments);
     };
     gtag('js', new Date());
-    gtag('config', 'G-F2WLE0BJLM', { 'send_page_view': false });
+    gtag('config', 'G-F2WLE0BJLM', { 'send_page_view': false, 'cookie_flags': 'samesite=none;secure' });
     gtag(
         'event',
         'ramp_js',
@@ -127,10 +127,10 @@ if(isAdinPlayEnabled())
                 AD_HEIGHT: 540,
                 AD_DISPLAY: 'fullscreen', //default, fullscreen, center, fill
                 LOADING_TEXT: 'loading advertisement',
-                PREROLL_ELEM: function(){return document.getElementById('preroll')},
-                AIP_COMPLETE: onInterstitialComplete,
-                AIP_REWARDEDCOMPLETE: onRewardedInterstitialComplete,
-                AIP_REWARDEDGRANTED: onRewardedInterstitialGranted
+                PREROLL_ELEM: function(){return document.getElementById('preroll');},
+                AIP_COMPLETE: function(evt){onInterstitialComplete(evt);},
+                AIP_REWARDEDCOMPLETE: function(evt){onRewardedInterstitialComplete(evt);},
+                AIP_REWARDEDGRANTED: function(){onRewardedInterstitialGranted();}
             });
         });
     }

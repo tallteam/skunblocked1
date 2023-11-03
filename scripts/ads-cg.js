@@ -1,42 +1,127 @@
 'use strict';
 
 ///////////////////////////
+var cgEnvDisabled;
+bannerMinRefreshDelayMillisecs = 1000 * 60; //increase time for cg to 1 min
+
 //ad tags
 const adTagMainMenuBanner = "smashkarts-io_300x250b";
 const adTagWinCeremonyBanner = "smashkarts-io_300x250_2b";
-const adTagLongBanner = "smashkarts-io_728x90b";
+const adTagDeathBanner = "smashkarts-io_728x90b";
 
-function hideAd(adElementId)
+var currShownAdElementIds = [];
+
+function hasAdContent(adElementId)
 {
     const ad = document.getElementById(adElementId);
 
-    if (ad != null) 
+    return (ad != null && ad.innerHTML);
+}
+
+function requestAd(adElementId, adShownTimestamp)
+{
+    if(cgEnvDisabled || currShownAdElementIds.includes(adElementId))
+        return;
+    
+    if(Date.now() >= (adShownTimestamp.val + bannerMinRefreshDelayMillisecs) || !hasAdContent(adElementId))
     {
-        ad.style.display = "none";
-        ad.innerHTML = "";
+        adShownTimestamp.val = Date.now();
+
+        destroyAd(adElementId);
+
+        window.CrazyGames.SDK.banner.requestResponsiveBanner(adElementId, (error, result) =>
+        {
+            if (error)
+            {
+                console.log("Error on request responsive banner (callback)", error);
+            }
+            else
+            {
+                currShownAdElementIds.push(adElementId);
+            }
+        });
     }
 }
 
-function showAd(adElementId)
+function hideAd(adElementId)
 {
-    return;
+    //hiding done on the parent container in ads-common-logic so we only need to reset currShownAdElementId
     
-    const ad = document.getElementById(adElementId);
-
-    if (ad != null) 
+    const indexToRemove = currShownAdElementIds.indexOf(adElementId);
+    
+    if(indexToRemove >= 0)
     {
-        ad.style.display = "flex";
+        currShownAdElementIds.splice(indexToRemove, 1);
     }
+}
+
+function destroyAd(adElementId)
+{
+    if(cgEnvDisabled)
+        return;
+    
+    window.CrazyGames.SDK.banner.clearBanner(adElementId);
+
+    const indexToRemove = currShownAdElementIds.indexOf(adElementId);
+
+    if(indexToRemove >= 0)
+    {
+        currShownAdElementIds.splice(indexToRemove, 1);
+    }
+}
+
+function requestMainMenuAd()
+{
+    requestAd(adTagMainMenuBanner, mainMenuBannerShownTimestamp)
+}
+
+function hideMainMenuAd()
+{
+    hideAd(adTagMainMenuBanner);
+}
+
+function requestWinCeremonyAd()
+{
+    requestAd(adTagWinCeremonyBanner, winCeremonyBannerShownTimestamp);
+}
+
+function hideWinCeremonyAd()
+{
+    hideAd(adTagWinCeremonyBanner);
+}
+
+//stubs
+function requestLoadingAd() {}
+function hideLoadingAd() {}
+function requestSpectateAd() {}
+function hideSpectateAd() {}
+
+function requestDeathAd()
+{
+    requestAd(adTagDeathBanner, deathBannerShownTimestamp);
+}
+
+function hideDeathAd()
+{
+    hideAd(adTagDeathBanner);
 }
 
 function requestOffCanvasAd(adResArrayToHide, adTagIdToShow)
 {
+    if(cgEnvDisabled)
+        return;
+    
     hideOffCanvasAds(adResArrayToHide);
 
     if (!window.adblockDetected)
     {
-        crazysdk.requestResponsiveBanner([adTagIdToShow]);
-        showAd(adTagIdToShow);
+        window.CrazyGames.SDK.banner.requestResponsiveBanner(adTagIdToShow, (error, result) =>
+        {
+            if (error)
+            {
+                console.log("Error on request responsive banner (callback)", error);
+            }
+        });
     }
 }
 
@@ -44,98 +129,38 @@ function hideOffCanvasAds(adResArray)
 {
     adResArray.forEach(adRes =>
     {
-        crazysdk.clearBanner(adRes.adId);
-        //hideAd(adRes.adId);
+        destroyAd(adRes.adId);
     });
-}
-
-function destroyMainMenuAd()
-{
-    crazysdk.clearBanner(adTagMainMenuBanner);
-    //hideAd(adTagMainMenuBanner);
-}
-
-function requestMainMenuAd()
-{
-    // if (!isMobile())
-    // {
-    //     crazysdk.requestBanner([
-    //         {
-    //             containerId: adTagMainMenuBanner,
-    //             size: '300x250',
-    //         }
-    //     ]);
-    //
-    //     showAd(adTagMainMenuBanner);
-    // }
-    
-    if (!isMobile())
-    {
-        crazysdk.requestResponsiveBanner([adTagMainMenuBanner]);
-        showAd(adTagMainMenuBanner);
-    }
-}
-
-function destroyWinCeremonyAd()
-{
-    crazysdk.clearBanner(adTagWinCeremonyBanner);
-    //hideAd(adTagWinCeremonyBanner);
-}
-
-function requestWinCeremonyAd(interstialRequested)
-{
-    // if (!isMobile())
-    // {
-    //     if (!interstialRequested)
-    //     {
-    //         crazysdk.requestBanner([
-    //             {
-    //                 containerId: adTagWinCeremonyBanner,
-    //                 size: '300x250',
-    //             }
-    //         ]);
-    //
-    //         showAd(adTagWinCeremonyBanner);
-    //     }
-    // }
-
-    if (!isMobile() && !interstialRequested)
-    {
-        crazysdk.requestResponsiveBanner([adTagWinCeremonyBanner]);
-        showAd(adTagWinCeremonyBanner);
-    }
-}
-
-//stubs
-function destroySpectateAd() {} 
-function requestSpectateAd() {}
-
-function destroyDeathAd()
-{
-    crazysdk.clearBanner(adTagLongBanner);
-    //hideAd(adTagLongBanner);
-}
-
-function requestDeathAd()
-{
-//     crazysdk.requestBanner([
-//         {
-//             containerId: adTagLongBanner,
-//             size: '728x90',
-//         }
-//     ]);
-//
-//     showAd(adTagLongBanner);
-
-    crazysdk.requestResponsiveBanner([adTagLongBanner]);
-    showAd(adTagLongBanner);
 }
 
 function showInterstitial(audioOn, interstitialType, interstitialName)
 {
+    if(cgEnvDisabled)
+    {
+        interstitialError(false);
+        return;
+    }
+        
     if (!isMobile())
     {
-        crazysdk.requestAd('midgame');
+        const callbacks = 
+        {
+            adStarted: () =>
+            {
+                interstitialStart(false);
+            },
+            adError: (error) =>
+            {
+                console.log("Error midgame ad:", error);
+                interstitialError(false);
+            },
+            adFinished: () =>
+            {
+                interstitialComplete(false);
+            }
+        };
+        
+        window.CrazyGames.SDK.ad.requestAd("midgame", callbacks);
     }
 }
 
@@ -149,44 +174,85 @@ function tryInitRewardedInterstitial(audioOn)
 
 function tryShowRewardedInterstitial(unusedParam)
 {
+    if(cgEnvDisabled)
+    {
+        interstitialError(true);
+        return;
+    }
+    
     if (!isMobile())
     {
         if(!window.adblockDetected)
         {
-            crazysdk.requestAd('rewarded');
+            const callbacks =
+            {
+                adStarted: () =>
+                {
+                    interstitialStart(true);
+                },
+                adError: (error) =>
+                {
+                    console.log("Error rewarded ad:", error);
+                    interstitialError(true);
+                },
+                adFinished: () =>
+                {
+                    interstitialComplete(true);
+                }
+            };
+
+            window.CrazyGames.SDK.ad.requestAd("rewarded", callbacks);
         }
         else
         {
-            interstitialNoFill();
+            interstitialNoFill(true);
         }
     }
 }
 
-function initAds()
-{
-    crazysdk.addEventListener('adStarted', interstitialStart);
-    crazysdk.addEventListener('adError', interstitialError);
-    crazysdk.addEventListener('adFinished', interstitialComplete);
-}
-
 function getCrazyGamesShareLinkJS(roomName, gameMode, levelName)
 {
-    return crazysdk.inviteLink({ room: roomName, mode: gameMode, arena: levelName });
+    if(cgEnvDisabled)
+        return;
+    
+    return window.CrazyGames.SDK.game.inviteLink({ room: roomName, mode: gameMode, arena: levelName }, (error, link) => 
+    {
+        if (error) 
+        {
+            console.log("Invite link error (callback)", error);
+        } else 
+        {
+            console.log("Invite link (callback)", link);
+        }
+    });
 }
 
 function recordGameplayStart()
 {
-    crazysdk.gameplayStart()
+    if(cgEnvDisabled)
+        return;
+    
+    window.CrazyGames.SDK.game.gameplayStart()
 }
 
 function recordGameplayStop()
 {
-    crazysdk.gameplayStop();
+    if(cgEnvDisabled)
+        return;
+    
+    window.CrazyGames.SDK.game.gameplayStop();
 }
 
 function recordHappyTime()
 {
-    crazysdk.happytime();
+    if(cgEnvDisabled)
+        return;
+    
+    window.CrazyGames.SDK.game.happytime();
 }
 
-initAds();
+window.CrazyGames.SDK.getEnvironment((_error, environment) =>
+{
+    console.log(environment); // 'local', 'crazygames' or 'disabled'
+    cgEnvDisabled = (environment === "disabled");
+});

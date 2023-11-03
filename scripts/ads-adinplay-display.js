@@ -2,124 +2,165 @@
 
 ///////////////////////////
 //ad tags
+const adTagLoadingBanner = "smashkarts-io_300x600_2";
 const adTagMainMenuBanner = "smashkarts-io_300x250";
 const adTagWinCeremonyBanner = "smashkarts-io_300x250_2";
 const adTagSpectateBanner = "smashkarts-io_300x250_3";
-const adTagLongBannerWeb = "smashkarts-io_728x90-new";
-const adTagLongBannerMobile = "smashkarts-io_320x100";
+const adTagDeathBannerWeb = "smashkarts-io_728x90-new";
+const adTagDeathBannerMobile = "smashkarts-io_320x100";
 
-function hideAd(adElementId)
+var currShownAdElementIds = [];
+
+function hasAdContent(adElementId)
 {
     const ad = document.getElementById(adElementId);
-    
-    if(ad != null) 
-    {
-      ad.style.display = "none";
-      ad.innerHTML = "";
-    }
+
+    return (ad != null && ad.innerHTML);
 }
 
 function showAd(adElementId)
 {
     const ad = document.getElementById(adElementId);
 
-    if(ad != null) 
+    if(ad != null)
     {
-      ad.style.display = "block";
+        ad.style.display = "block";
+    }
+    
+    currShownAdElementIds.push(adElementId);
+}
+
+function requestAd(adElementId, adShownTimestamp)
+{
+    if(currShownAdElementIds.includes(adElementId))
+        return;
+    
+    if(Date.now() >= (adShownTimestamp.val + bannerMinRefreshDelayMillisecs) || !hasAdContent(adElementId))
+    {
+        adShownTimestamp.val = Date.now();
+
+        destroyAd(adElementId);
+
+        aiptag.cmd.display.push(function()
+        {
+            aipDisplayTag.display(adElementId);
+            showAd(adElementId);
+        });
     }
 }
 
-function requestOffCanvasAd(adResArrayToHide, adTagIdToShow)
+function hideAd(adElementId)
 {
-  hideOffCanvasAds(adResArrayToHide);
-
-  aiptag.cmd.display.push(function() 
-  { 
-    aipDisplayTag.display(adTagIdToShow);
-    showAd(adTagIdToShow);
-  });  
+    if(currShownAdElementIds.includes(adElementId))
+    {
+        //for adinplay we dont distingush between hiding and destroying
+        destroyAd(adElementId);
+        
+        //if we were hiding you would need to reset the currShownAdElement
+        //currShownAdElementId = null;
+    }
 }
 
-function hideOffCanvasAds(adResArray)
+function destroyAd(adElementId)
 {
-  adResArray.forEach(adRes => {
-    hideAd(adRes.adId);    
-  });
+    const ad = document.getElementById(adElementId);
+
+    if(ad != null)
+    {
+        ad.style.display = "none";
+        //ad.innerHTML = "";
+        aiptag.cmd.display.push(function() 
+        { 
+            aipDisplayTag.destroy(adElementId); 
+        });
+    }
+    
+    const indexToRemove = currShownAdElementIds.indexOf(adElementId);
+    
+    if(indexToRemove >= 0)
+    {
+        currShownAdElementIds.splice(indexToRemove, 1);
+    }
+}
+
+function requestLoadingAd()
+{
+    requestAd(adTagLoadingBanner, loadingBannerShownTimestamp);
+}
+
+function hideLoadingAd()
+{
+    hideAd(adTagLoadingBanner);
 }
 
 function requestMainMenuAd()
 {
-  if(!isMobile())
-  {
-    aiptag.cmd.display.push(function() 
-    { 
-      aipDisplayTag.display(adTagMainMenuBanner);
-      showAd(adTagMainMenuBanner);
-    });
-  }
+    requestAd(adTagMainMenuBanner, mainMenuBannerShownTimestamp);
 }
 
-function destroyMainMenuAd()
+function hideMainMenuAd()
 {
     hideAd(adTagMainMenuBanner);
 }
 
-function requestWinCeremonyAd(interstialRequested)
+function requestWinCeremonyAd()
 {
-  if(!isMobile())
-  {
-    aiptag.cmd.display.push(function() 
-    { 
-      aipDisplayTag.display(adTagWinCeremonyBanner);
-      showAd(adTagWinCeremonyBanner);
-    });
-  }
+    requestAd(adTagWinCeremonyBanner, winCeremonyBannerShownTimestamp);
 }
 
-function destroyWinCeremonyAd()
+function hideWinCeremonyAd()
 {
     hideAd(adTagWinCeremonyBanner);
 }
 
 function requestSpectateAd()
 {
-    if(!isMobile())
-    {
-        aiptag.cmd.display.push(function()
-        {
-            aipDisplayTag.display(adTagSpectateBanner);
-            showAd(adTagSpectateBanner);
-        });
-    }
+    requestAd(adTagSpectateBanner, spectateBannerShownTimestamp);
 }
 
-function destroySpectateAd()
+function hideSpectateAd()
 {
     hideAd(adTagSpectateBanner);
 }
 
 function requestDeathAd()
 {
-  if(!isMobile())
-  {
-      aiptag.cmd.display.push(function() 
-      { 
-        aipDisplayTag.display(adTagLongBannerWeb);
-        showAd(adTagLongBannerWeb);
-      });
-  }
-  else
-  {
-      aiptag.cmd.display.push(function() 
-      { 
-        aipDisplayTag.display(adTagLongBannerMobile);
-        showAd(adTagLongBannerMobile);
-      });
-  }
+    if(isMobile())
+    {
+        requestAd(adTagDeathBannerMobile, deathBannerShownTimestamp);
+    }
+    else
+    {
+        requestAd(adTagDeathBannerWeb, deathBannerShownTimestamp);
+    }
 }
 
-function destroyDeathAd()
+function hideDeathAd()
 {
-  hideAd(adTagLongBannerWeb);
-  hideAd(adTagLongBannerMobile);  
+    if(isMobile())
+    {
+        hideAd(adTagDeathBannerMobile);
+    }
+    else
+    {
+        hideAd(adTagDeathBannerWeb);
+    }
+}
+
+function requestOffCanvasAd(adResArrayToHide, adTagIdToShow)
+{
+    hideOffCanvasAds(adResArrayToHide);
+
+    aiptag.cmd.display.push(function()
+    {
+        aipDisplayTag.display(adTagIdToShow);
+        showAd(adTagIdToShow);
+    });
+}
+
+function hideOffCanvasAds(adResArray)
+{
+    adResArray.forEach(adRes => {
+        destroyAd(adRes.adId);
+    });
 }

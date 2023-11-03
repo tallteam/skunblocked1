@@ -1,5 +1,24 @@
 'use strict';
 
+function hideAllAdUnits()
+{
+    if(!rampInitialised())
+        return;
+
+    if(typeof ramp.destroyUnits === "function" && rampCurrAdUnitId != null)
+    {
+        //patch fix: pass in currently used ad unit types instead of "all" as "all" was previously causing an issue relating to trying to also destroy the video player unit
+        ramp.destroyUnits(adUnitTypes);
+        //ramp.destroyUnits("all");
+
+        //set path to gamepage as no ad units are enabled for gamepage
+        ramp.setPath("gamepage");
+
+        rampCurrAdUnitId = null;
+        rampCurrAdUnitType = null;
+    }
+}
+
 function rampDisplayAdUnit(path, adUnitId, adUnitType)
 {
     if(!rampInitialised())
@@ -7,9 +26,10 @@ function rampDisplayAdUnit(path, adUnitId, adUnitType)
 
     if (!isVideoAdPlaying && rampCurrAdUnitId != adUnitId && typeof ramp.setPath === "function" && typeof ramp.addUnits === "function")
     {
+        hideAllAdUnits();
+        
         rampCurrPath = path;
 
-        console.log(`playwire setPath: ${path}`);
         ramp.setPath(path).then(() =>
         {
             var pwUnits = [
@@ -24,12 +44,10 @@ function rampDisplayAdUnit(path, adUnitId, adUnitType)
 
             ramp.addUnits(pwUnits).then(() =>
             {
-                console.log(`playwire addUnits: ${adUnitId} ${adUnitType}`);
                 ramp.displayUnits();
             }).catch((e) =>
             {
                 ramp.displayUnits();
-                console.log(`playwire addUnits ${adUnitId} ${adUnitType} error: ${e}`);
             });
 
         }).catch((e) =>
@@ -37,27 +55,6 @@ function rampDisplayAdUnit(path, adUnitId, adUnitType)
             console.log(`playwire setPath ${path} error: ${e}`);
         });
 
-    }
-}
-
-function hideAllAdUnits()
-{
-    if(!rampInitialised())
-        return;
-
-    if(typeof ramp.destroyUnits === "function" && rampCurrAdUnitId != null)
-    {
-        console.log("playwire destroyAllUnits");
-
-        //patch fix: pass in currently used ad unit types instead of "all" as "all" was previously causing an issue relating to trying to also destroy the video player unit
-        ramp.destroyUnits(adUnitTypes);
-        //ramp.destroyUnits("all");
-
-        //set path to gamepage as no ad units are enabled for gamepage
-        ramp.setPath("gamepage");
-
-        rampCurrAdUnitId = null;
-        rampCurrAdUnitType = null;
     }
 }
 
@@ -71,31 +68,33 @@ function requestMainMenuAd()
     rampDisplayAdUnit("mainmenu", "pw_mainmenu", "med_rect_atf");
 }
 
-function destroyMainMenuAd()
+function hideMainMenuAd()
 {
     hideAllAdUnits();
 }
 
-function requestWinCeremonyAd(interstialRequested)
+function requestWinCeremonyAd()
 {
     rampDisplayAdUnit("roundend", "pw_roundend", "med_rect_btf");
 }
 
-function destroyWinCeremonyAd()
+function hideWinCeremonyAd()
 {
     hideAllAdUnits();
 }
 
 //stubs
+function requestLoadingAd() {}
+function hideLoadingAd() {}
 function requestSpectateAd() {}
-function destroySpectateAd() {}
+function hideSpectateAd() {}
 
 function requestDeathAd()
 {
     rampDisplayAdUnit("ondeath", "pw_ondeath", "leaderboard_atf");
 }
 
-function destroyDeathAd()
+function hideDeathAd()
 {
     hideAllAdUnits();
 }

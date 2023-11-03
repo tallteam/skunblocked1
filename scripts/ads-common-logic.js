@@ -7,9 +7,21 @@ baitScript.async = false;
 document.head.appendChild(baitScript);
 
 //globals
+var bannerMinRefreshDelayMillisecs = 0; //can be overwritten depending on ad provider, 0 defaults to requesting a new ad each time
+
+var loadingBannerShownTimestamp = {val: -1}; //wrap in object to pass by ref
+const divIdLoadingBanner = "adContainerLoadingLeft";
+
+var mainMenuBannerShownTimestamp = {val: -1}; //wrap in object to pass by ref
 const divIdMainMenuBanner = "adContainerMainMenu";
+
+var winCeremonyBannerShownTimestamp = {val: -1}; //wrap in object to pass by ref
 const divIdWinCeremonyBanner = "adContainerWin";
+
+var spectateBannerShownTimestamp = {val: -1}; //wrap in object to pass by ref
 const divIdSpectateBanner = "adContainerSpectate";
+
+var deathBannerShownTimestamp = {val: -1}; //wrap in object to pass by ref
 const divIdDeathBanner = "adContainerDeath";
 
 const testBaitDelay = 1000;
@@ -17,6 +29,9 @@ var adblockDetectedType;
 var pendingAdblockDetectedMessage;
 
 var isVideoAdPlaying; //used internally in ad provider scripts
+
+const loadingAdBannerPollDelay = 100;
+var loadingAdBannerIntervalId;
 
 function createAdBlockBaitDiv(divId, classList)
 {
@@ -60,14 +75,14 @@ function onUpdateAdBlockDetectedComplete(detectionType)
   if(!window.adblockDetected)
   {
     adblockDetectedType = detectionType;
-  
+
     window.adblockDetected = (detectionType != null);
-  
+
     if(window.adblockDetected)
     {
       console.log(`Adblock detected: ${detectionType}`);
     }
-  
+
     pendingAdblockDetectedMessage = true;
     trySendAdBlockDetectedMessage();
   }
@@ -104,7 +119,7 @@ function updateAdBlockDetected()
   var localAdBlockDiv = createAdBlockBaitDiv("AdBanner", ['adLeaderboard', 'adBanner', 'leaderboard_ad']);
 
   //delay testing bait divs to let adblockers do their thing
-  setTimeout(() => 
+  setTimeout(() =>
   {
     //test local script bait
     if(document.getElementById('sklocalscriptbait') == null)
@@ -136,7 +151,7 @@ function updateAdBlockDetected()
     };
 
     img.src = 'https://px.moatads.com/pixel.gif';
-    
+
     //test bait divs from firebase ids
     if (typeof firebase !== 'undefined' && firebase.database() != null && firebase.auth() != null)
     {
@@ -223,12 +238,25 @@ function showAdContainer(adElementId)
   }
 }
 
-function hideMainMenuBanner()
+function hideLoadingBanner()
 {
   if(!offCanvasAdsEnabled)
   {
-    hideAdContainer(divIdMainMenuBanner);
-    destroyMainMenuAd();
+    hideAdContainer(divIdLoadingBanner);
+    hideLoadingAd();
+  }
+}
+
+function showLoadingBanner()
+{
+  if(!offCanvasAdsEnabled)
+  {
+    //check for adblock specifically for main menu banner as we show our own disable blocker panel 
+    if(!isMobile() && !window.adblockDetected)
+    {
+      showAdContainer(divIdLoadingBanner);
+      requestLoadingAd();
+    }
   }
 }
 
@@ -243,8 +271,17 @@ function showDummyMainMenuBanner()
     hideSpectateBanner();
 
     showAdContainer(divIdMainMenuBanner);
-    //updateAdSizes();
+
     requestDummyMainMenuAd();
+  }
+}
+
+function hideMainMenuBanner()
+{
+  if(!offCanvasAdsEnabled)
+  {
+    hideAdContainer(divIdMainMenuBanner);
+    hideMainMenuAd();
   }
 }
 
@@ -256,9 +293,12 @@ function showMainMenuBanner()
     hideLongBanner();
     hideSpectateBanner();
 
-    showAdContainer(divIdMainMenuBanner);
-    //updateAdSizes();
-    requestMainMenuAd();
+    //check for adblock specifically for main menu banner as we show our own disable blocker panel 
+    if(!isMobile() && !window.adblockDetected)
+    {
+      showAdContainer(divIdMainMenuBanner);
+      requestMainMenuAd();
+    }
   }
 }
 
@@ -267,11 +307,11 @@ function hideWinCeremonyBanner()
   if(!offCanvasAdsEnabled)
   {
     hideAdContainer(divIdWinCeremonyBanner);
-    destroyWinCeremonyAd();
+    hideWinCeremonyAd();
   }
 }
 
-function showWinCeremonyBanner(interstialRequested)
+function showWinCeremonyBanner()
 {
   if(!offCanvasAdsEnabled)
   {
@@ -280,8 +320,7 @@ function showWinCeremonyBanner(interstialRequested)
     hideSpectateBanner();
 
     showAdContainer(divIdWinCeremonyBanner);
-    //updateAdSizes();
-    requestWinCeremonyAd(interstialRequested);
+    requestWinCeremonyAd();
   }
 }
 
@@ -290,7 +329,7 @@ function hideSpectateBanner()
   if(!offCanvasAdsEnabled)
   {
     hideAdContainer(divIdSpectateBanner);
-    destroySpectateAd();
+    hideSpectateAd();
   }
 }
 
@@ -303,7 +342,6 @@ function showSpectateBanner()
     hideWinCeremonyBanner();
 
     showAdContainer(divIdSpectateBanner);
-    //updateAdSizes();
     requestSpectateAd();
   }
 }
@@ -322,13 +360,13 @@ function hideLongBanner()
     {
       //not showing off canvas btm ad so destroy standard on canvas death banner
       hideAdContainer(divIdDeathBanner);
-      destroyDeathAd();  
+      hideDeathAd();
     }
   }
   else
   {
     hideAdContainer(divIdDeathBanner);
-    destroyDeathAd();
+    hideDeathAd();
   }
 }
 
@@ -357,42 +395,34 @@ function showLongBanner()
       hideMainMenuBanner();
 
       showAdContainer(divIdDeathBanner);
-      //updateAdSizes();
-      requestDeathAd();  
+      requestDeathAd();
     }
   }
   else
   {
     hideWinCeremonyBanner();
     hideMainMenuBanner();
-  
+
     showAdContainer(divIdDeathBanner);
-    //updateAdSizes();
     requestDeathAd();
   }
 }
 
-function showPreGameInterstitial(audioOn)
+function showNonRewardedInterstitial(audioOn, interstitialType, interstitialName)
 {
   if(!window.adblockDetected)
   {
-    showInterstitial(audioOn, 'start', 'pregame');
+    //showInterstitial(audioOn, 'start', 'pregame');
+    //showInterstitial(audioOn, 'next', 'winceremony')
+    showInterstitial(audioOn, interstitialType, interstitialName)
   }
 }
 
-function showWinCeremonyInterstitial(audioOn)
-{
-  if(!window.adblockDetected)
-  {
-    showInterstitial(audioOn, 'next', 'winceremony')
-  }
-}
-
-function interstitialStart()
+function interstitialStart(rewarded)
 {
   isVideoAdPlaying = true;
-  
-  window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialStart");
+
+  window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialStart", rewarded ? 1 : 0);
 
   if(offCanvasAdsEnabled)
   {
@@ -400,11 +430,11 @@ function interstitialStart()
   }
 }
 
-function interstitialError()
+function interstitialError(rewarded)
 {
   isVideoAdPlaying = false;
 
-  window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialFailed");
+  window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialFailed", rewarded ? 1 : 0);
 
   if(offCanvasAdsEnabled)
   {
@@ -412,11 +442,11 @@ function interstitialError()
   }
 }
 
-function interstitialSkipped()
+function interstitialSkipped(rewarded)
 {
   isVideoAdPlaying = false;
-  
-  window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialSkipped");
+
+  window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialSkipped", rewarded ? 1 : 0);
 
   if(offCanvasAdsEnabled)
   {
@@ -424,11 +454,11 @@ function interstitialSkipped()
   }
 }
 
-function interstitialNoFill()
+function interstitialNoFill(rewarded)
 {
   isVideoAdPlaying = false;
-  
-  window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialNoFill");
+
+  window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialNoFill", rewarded ? 1 : 0);
 
   if(offCanvasAdsEnabled)
   {
@@ -436,14 +466,36 @@ function interstitialNoFill()
   }
 }
 
-function interstitialComplete()
+function interstitialComplete(rewarded)
 {
   isVideoAdPlaying = false;
-  
-  window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialComplete");
+
+  window.unityGame.SendMessage(unityFirebaseGameOjbectName, "InterstitialComplete", rewarded ? 1 : 0);
 
   if(offCanvasAdsEnabled)
   {
     refreshAllOffCanvasAds();
   }
+}
+
+function canShowLoadingAdBanner()
+{
+  return (!window.adblockDetected &&
+      (loadingState === "None" || loadingState === "Closing" || loadingState === "Closed") &&
+      (userNoAdsEndTimestamp != null && userNoAdsEndTimestamp <= Date.now()) &&
+      !isMobile());
+}
+
+function updateLoadingAdBanner()
+{
+  //poll to determine if we can show a loading ad or not
+  loadingAdBannerIntervalId = setInterval(() =>
+  {
+    if(canShowLoadingAdBanner())
+    {
+      showLoadingBanner();
+      showMainMenuBanner();
+      clearInterval(loadingAdBannerIntervalId);
+    }
+  }, loadingAdBannerPollDelay);
 }

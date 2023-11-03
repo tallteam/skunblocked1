@@ -16,7 +16,7 @@ function showInterstitial(audioOn, interstitialType, interstitialName)
         {
             isVideoAdPlaying = true;
 
-            interstitialStart();
+            interstitialStart(false);
 
             aiptag.cmd.player.push(function()
             {
@@ -31,7 +31,7 @@ function showInterstitial(audioOn, interstitialType, interstitialName)
 
             isVideoAdPlaying = false;
 
-            interstitialError();
+            interstitialError(false);
         }
     }
 }
@@ -44,12 +44,22 @@ function onInterstitialComplete(evt)
      Please do not remove the PREROLL_ELEM
      from the page, it will be hidden automaticly.
      */
-    console.log("Preroll Ad Completed: " + evt);
+    console.log("onInterstitialComplete: " + evt);
 
     isVideoAdPlaying = false;
 
-    //skip so as not to reward the user
-    interstitialSkipped();
+    if(evt === "video-ad-completed")
+    {
+        interstitialComplete(false);
+    }
+    else if(evt === "video-ad-skipped")
+    {
+        interstitialSkipped(false);
+    }
+    else
+    {
+        interstitialError(false);
+    }
 }
 
 function tryInitRewardedInterstitial(audioOn)
@@ -117,7 +127,7 @@ function tryShowRewardedInterstitial(audioOn)
 {
     if(!aipVideoPlayerInitialised() || !aipRewardedAdAvailable)
     {
-        interstitialNoFill();
+        interstitialNoFill(true);
         return;
     }
 
@@ -125,7 +135,7 @@ function tryShowRewardedInterstitial(audioOn)
     {
         isVideoAdPlaying = true;
 
-        interstitialStart();
+        interstitialStart(true);
 
         aiptag.adplayer.showRewardedAd();
 
@@ -145,7 +155,7 @@ function onRewardedInterstitialGranted()
 
     isVideoAdPlaying = false;
 
-    interstitialComplete();
+    interstitialComplete(true);
 }
 
 function onRewardedInterstitialComplete(evt)
@@ -158,11 +168,11 @@ function onRewardedInterstitialComplete(evt)
     if(evt === "closed")
     {
         //skipped by the user
-        interstitialSkipped();
+        interstitialSkipped(true);
     }
     else
     {
         //timeout or empty
-        interstitialNoFill();
+        interstitialNoFill(true);
     }
 }

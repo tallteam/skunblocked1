@@ -110,23 +110,23 @@ window.copyText = function (text) {
 
 function firebaseLogEvent(eventName)
 {
-  if(firebaseSupported) firebase.analytics().logEvent(eventName);
+  if(firebase.analytics != null) firebase.analytics().logEvent(eventName);
 }
 
 function firebaseSetScreen(screenName)
 {
-  if(firebaseSupported) firebase.analytics().setCurrentScreen(screenName);  
-  if(firebaseSupported) firebase.analytics().logEvent("screen_view", { "screen_name": screenName})
+  if(firebase.analytics != null) firebase.analytics().setCurrentScreen(screenName);  
+  if(firebase.analytics != null) firebase.analytics().logEvent("screen_view", { "screen_name": screenName})
 }
 
 function firebaseLogEventWithParam(eventName, p, v)
 {
-  if(firebaseSupported) firebase.analytics().logEvent(eventName, { [p]: v});
+  if(firebase.analytics != null) firebase.analytics().logEvent(eventName, { [p]: v});
 }
 
 function firebaseLogEventWithParamDict(eventName, paramsDict)
 {
-  if(firebaseSupported) firebase.analytics().logEvent(eventName, paramsDict);
+  if(firebase.analytics != null) firebase.analytics().logEvent(eventName, paramsDict);
 }
 
 var fs = false;
@@ -223,4 +223,20 @@ function isFullscreen()
   function reloadPage()
   {
     location.reload();
+  }
+  
+  var loadingState = "None";
+  function updateLoadingState(state)
+  {
+    loadingState = state;
+  }
+  
+  function onLoadingToMainMenuComplete(isCG)
+  {
+    hideLoadingBanner();
+
+    if(isCG && !cgEnvDisabled)
+    {
+      window.CrazyGames.SDK.game.sdkGameLoadingStop();
+    }
   }

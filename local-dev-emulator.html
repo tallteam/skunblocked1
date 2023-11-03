@@ -103,9 +103,12 @@
 			<canvas id="gameCanvas"></canvas>
 
 			<!-- On canvas ad containers -->
+			<div id="adContainerLoadingLeft"> <!-- loading -->
+				<div id="smashkarts-io_300x600_2"></div> <!-- adinplay -->
+			</div>	
 			<div id="adContainerMainMenu"> <!-- main menu -->
 				<div id="smashkarts-io_300x250"></div> <!-- adinplay -->
-
+			
 				<!-- playwire -->
 				<div id="pw_mainmenu"></div>
 				<!-- dummy placement to ensure rewarded videos init correctly when ads are disabled for season pass holders -->
@@ -211,38 +214,25 @@
 	firebase.functions().useEmulator("localhost", 5001);
 
 
-	var firebaseSupported = false;
-	if(firebase.analytics != null)
-	{
-		firebase.analytics.isSupported().then((isSupported) =>
-		{
-			if (isSupported)
-			{
-				analytics = firebase.analytics();
-				firebaseSupported = true;
-			}
-			else
-			{
-				console.log("firebase.analytics() not supported ");
-			}
-		})
-	}
-
+	analytics = firebase.analytics();
+	gtag('config', 'G-1W23DRFHK9', {'cookie_flags': 'samesite=none;secure'}); 
+	
 	firebaseSetScreen("loading_start");
 	firebaseLogEvent("loading_page_start");
 
 	updateAdBlockDetected();
+	updateLoadingAdBanner();
 	
 	var timerStart = Date.now();
 	var sentGameInstanceStartEvent = false;
 
 	const buildUrl = "Build";
 
-	const loaderUrl = buildUrl + "/SmashKarts_p2.loader.js";
+	const loaderUrl = buildUrl + "/nw5.loader.js";
 	const config = {
-		dataUrl: buildUrl + "/b592aac4c23504426eb93b97f34235b1.data.br",
-		frameworkUrl: buildUrl + "/98c989a39e7076454c2c71bbd139226e.js.br",
-		codeUrl: buildUrl + "/b9e13e684379d13372c6f7c0152d7262.wasm.br",
+		dataUrl: buildUrl + "/30a7093453dd27c77d29b1640c74f0e4.data.br",
+		frameworkUrl: buildUrl + "/ff3c8b48ce5201438644377e5d17eb37.js.br",
+		codeUrl: buildUrl + "/f4a3ec051546c40915b1e6af30d5e9f5.wasm.br",
 		// #if MEMORY_FILENAME
 		//         memoryUrl: buildUrl + "/",
 		// #endif

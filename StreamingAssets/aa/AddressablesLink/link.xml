@@ -37,6 +37,8 @@
     <type fullname="GameModeManagerScoreCollector" preserve="all" />
     <type fullname="GameScreenManager" preserve="all" />
     <type fullname="GameStartScreen" preserve="all" />
+    <type fullname="GameTutorialManager" preserve="all" />
+    <type fullname="GameTutorialPopupWidget" preserve="all" />
     <type fullname="GenericObjectPooler" preserve="all" />
     <type fullname="GenericPoolableObject" preserve="all" />
     <type fullname="HatHolderHudIcon" preserve="all" />
@@ -88,6 +90,7 @@
     <type fullname="StarrySkyStaticParticleSystem" preserve="all" />
     <type fullname="TeamPicker" preserve="all" />
     <type fullname="UIGlint" preserve="all" />
+    <type fullname="UIGradient" preserve="all" />
     <type fullname="UnityStandardAssets.Cameras.ProtectCameraFromWallClip" preserve="all" />
     <type fullname="UnityStandardAssets.Utility.AutoMoveAndRotate" preserve="all" />
     <type fullname="VehicleBullet" preserve="all" />
@@ -142,6 +145,7 @@
   </assembly>
   <assembly fullname="UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.AI.NavMeshData" preserve="all" />
+    <type fullname="UnityEngine.AI.NavMeshObstacle" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.AnimationClip" preserve="all" />
@@ -188,6 +192,7 @@
   <assembly fullname="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.BoxCollider" preserve="all" />
     <type fullname="UnityEngine.CapsuleCollider" preserve="all" />
+    <type fullname="UnityEngine.HingeJoint" preserve="all" />
     <type fullname="UnityEngine.MeshCollider" preserve="all" />
     <type fullname="UnityEngine.PhysicMaterial" preserve="all" />
     <type fullname="UnityEngine.Rigidbody" preserve="all" />

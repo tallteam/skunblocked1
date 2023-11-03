@@ -13,8 +13,8 @@ function showInterstitial(unusedParam, interstitialType, interstitialName)
 
             type: interstitialType,  // ad shows at start of next level
             name: interstitialName,
-            beforeAd: interstitialStart,
-            afterAd: interstitialComplete,
+            beforeAd: () => interstitialStart(false),
+            afterAd: () => interstitialComplete(false),
             adBreakDone: () => {isVideoAdPlaying = false;}
         });
     }
@@ -30,12 +30,12 @@ function tryInitRewardedInterstitial(unusedParam)
         adBreak({
             type: 'reward', // The type of this placement
             name: 'rewardedxpboost', // A descriptive name for this placement
-            beforeAd: () => {interstitialStart();}, // Prepare for the ad. Mute and pause the game flow
-            afterAd: () => {console.log("tryInitRewardedInterstitials afterAd");}, // Resume the game and re-enable sound
-            beforeReward: (showAdFn) => { rewardedInterstitialAvailable(showAdFn) }, // Show reward prompt (call showAdFn() if clicked)
-            adDismissed: () => {interstitialSkipped();}, // Player dismissed the ad before it finished.
-            adViewed: () => {interstitialComplete();}, // Player watched the ad–give them the reward.
-            adBreakDone: (placementInfo) => { onGoogleRewardedVideoAdBreakDone(placementInfo); }, // Always called (if provided) even if an ad didn’t show
+            beforeAd: () => interstitialStart(true), // Prepare for the ad. Mute and pause the game flow
+            afterAd: () => console.log("tryInitRewardedInterstitials afterAd"), // Resume the game and re-enable sound
+            beforeReward: (showAdFn) => rewardedInterstitialAvailable(showAdFn), // Show reward prompt (call showAdFn() if clicked)
+            adDismissed: () => interstitialSkipped(true), // Player dismissed the ad before it finished.
+            adViewed: () => interstitialComplete(true), // Player watched the ad–give them the reward.
+            adBreakDone: (placementInfo) => onGoogleRewardedVideoAdBreakDone(placementInfo), // Always called (if provided) even if an ad didn’t show
         });
     }
 }
@@ -50,7 +50,7 @@ function tryShowRewardedInterstitial(unusedParam)
     else
     {
         console.log("tryShowRewardedInterstitial onShowRewardedVideoClicked == null");
-        interstitialNoFill();
+        interstitialNoFill(true);
     }
 }
 

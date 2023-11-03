@@ -1,7 +1,7 @@
 'use strict';
 
 var unityFirebaseGameOjbectName = 'JavascriptMessageReceiver';
- 
+
 var firstLoad = true;
 
 function onAuthStateChanged(user) {
@@ -14,6 +14,7 @@ function onAuthStateChanged(user) {
   }
   else
   {
+    getUserNoAdsEndTimestamp();
     sendAuthDataToUnity();
   }
   firstLoad = false;
@@ -32,19 +33,19 @@ function signInAnonymously()
 function signInWithEmail(email, password)
 {
   firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      console.log("signInWithEmailAndPassword Success");
-    }) 
-    .catch(function(error) 
-    {
-      console.log("error logging in " + error.code);
-      console.error(error);
-      window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseSignInWithEmailFailed", error.message);
+  .then((userCredential) => {
+    console.log("signInWithEmailAndPassword Success");
+  })
+  .catch(function(error)
+  {
+    console.log("error logging in " + error.code);
+    console.error(error);
+    window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseSignInWithEmailFailed", error.message);
   });
 }
 
 function linkUserWithEmail(email, password)
-{  
+{
   if(firebase.auth().currentUser != null && firebase.auth().currentUser.isAnonymous)
   {
     var credential = firebase.auth.EmailAuthProvider.credential(email, password);
@@ -61,29 +62,29 @@ function linkUserWithEmail(email, password)
 
 function checkForRedirect()
 {
-  firebase.auth().getRedirectResult().then(function(result) 
+  firebase.auth().getRedirectResult().then(function(result)
+  {
+    console.log("linkOrSignInWithGoogle:success");
+    sendAuthDataToUnity();
+  }, function(error)
+  {
+    if(error.code == "auth/credential-already-in-use")
+    {
+      console.log("linkOrSignInWithGoogle:fail auth/credential-already-in-use try signInWithCredential");
+      firebase.auth().signInWithCredential(error.credential).catch(function(error)
       {
-        console.log("linkOrSignInWithGoogle:success");
-        sendAuthDataToUnity();
-      }, function(error) 
-      {
-        if(error.code == "auth/credential-already-in-use")
-        {
-          console.log("linkOrSignInWithGoogle:fail auth/credential-already-in-use try signInWithCredential");
-          firebase.auth().signInWithCredential(error.credential).catch(function(error) 
-          {
-            console.log("signInWithCredential:: Error logging in " + error.code);
-            console.error(error);
-            window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseSignInWithEmailFailed", error.message);
-           });
-        }
-        else
-        {
-          console.log("linkOrSignInWithGoogle:: Error logging in " + error.code);
-          console.error(error);
-          window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseLinkUserWithEmailFailed", error.message);
-        }
+        console.log("signInWithCredential:: Error logging in " + error.code);
+        console.error(error);
+        window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseSignInWithEmailFailed", error.message);
       });
+    }
+    else
+    {
+      console.log("linkOrSignInWithGoogle:: Error logging in " + error.code);
+      console.error(error);
+      window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseLinkUserWithEmailFailed", error.message);
+    }
+  });
 }
 
 function linkOrSignInWithGoogle()
@@ -99,20 +100,20 @@ function linkOrSignInWithGoogle()
     }
     else
     {
-      firebase.auth().currentUser.linkWithPopup(provider).then((result) => 
+      firebase.auth().currentUser.linkWithPopup(provider).then((result) =>
       {
         console.log("linkOrSignInWithGoogle:: Success");
         sendAuthDataToUnity();
-      }).catch((error) => 
+      }).catch((error) =>
       {
         if(error.code == "auth/credential-already-in-use")
         {
-          firebase.auth().signInWithCredential(error.credential).catch(function(error) 
+          firebase.auth().signInWithCredential(error.credential).catch(function(error)
           {
             console.log("signInWithCredential:: Error logging in " + error.code);
             console.error(error);
             window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseSignInWithEmailFailed", error.message);
-           });
+          });
         }
         else
         {
@@ -128,7 +129,7 @@ function linkOrSignInWithGoogle()
 function linkOrSignInWithApple()
 {
   var provider = new firebase.auth.OAuthProvider('apple.com');
- 
+
   if(firebase.auth().currentUser != null && firebase.auth().currentUser.isAnonymous)
   {
     var isSafariBrowser = (navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') <= -1);
@@ -138,20 +139,20 @@ function linkOrSignInWithApple()
     }
     else
     {
-      firebase.auth().currentUser.linkWithPopup(provider).then((result) => 
+      firebase.auth().currentUser.linkWithPopup(provider).then((result) =>
       {
         console.log("linkOrSignInWithApple:: Success");
         sendAuthDataToUnity();
-      }).catch((error) => 
+      }).catch((error) =>
       {
         if(error.code == "auth/credential-already-in-use")
         {
-          firebase.auth().signInWithCredential(error.credential).catch(function(error) 
+          firebase.auth().signInWithCredential(error.credential).catch(function(error)
           {
             console.log("signInWithCredential:: Error logging in " + error.code);
             console.error(error);
             window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseSignInWithEmailFailed", error.message);
-           });
+          });
         }
         else
         {
@@ -177,14 +178,14 @@ function signOut()
 
 function sendAuthDataToUnity()
 {
-    if(window.unityGame != null && firebase.auth().currentUser != null)
-    {     
-      var firebaseUid = firebase.auth().currentUser.uid;
-      var isAnon = firebase.auth().currentUser.isAnonymous;
-      var data = {authToken:"",uid:firebaseUid,isAnonymous:isAnon};
-      var dataJson = JSON.stringify(data);
-      window.unityGame.SendMessage(unityFirebaseGameOjbectName, 'SetAuthToken', dataJson);
-    }
+  if(window.unityGame != null && firebase.auth().currentUser != null)
+  {
+    var firebaseUid = firebase.auth().currentUser.uid;
+    var isAnon = firebase.auth().currentUser.isAnonymous;
+    var data = {authToken:"",uid:firebaseUid,isAnonymous:isAnon};
+    var dataJson = JSON.stringify(data);
+    window.unityGame.SendMessage(unityFirebaseGameOjbectName, 'SetAuthToken', dataJson);
+  }
 }
 
 function sendPasswordResetEmail(emailAddress)
@@ -199,20 +200,20 @@ function sendPasswordResetEmail(emailAddress)
   });
 }
 
-function getValueTT(nodeKey) 
+function getValueTT(nodeKey)
 {
   const dbRef = firebase.database().ref();
   dbRef.child(nodeKey).once('value').then((snapshot) => {
-    if (snapshot.exists()) 
+    if (snapshot.exists())
     {
       var valJsonStr = JSON.stringify(snapshot.val());
       SendDataToUnity("OnGetValueSuccess", nodeKey, valJsonStr);
-    } 
+    }
     else
     {
       window.unityGame.SendMessage(unityFirebaseGameOjbectName, "OnGetValueEmptySuccess", nodeKey);
     }
-  }).catch((error) => 
+  }).catch((error) =>
   {
     window.unityGame.SendMessage(unityFirebaseGameOjbectName, "OnGetValueError", nodeKey, error.message);
     console.error(error);
@@ -221,11 +222,11 @@ function getValueTT(nodeKey)
 
 function SendDataToUnity(functionName, nk, ds)
 {
-  var obj = 
-  {
-    nodeKey: nk,
-    dataStr: ds
-  }
+  var obj =
+      {
+        nodeKey: nk,
+        dataStr: ds
+      }
 
   window.unityGame.SendMessage(unityFirebaseGameOjbectName, functionName, JSON.stringify(obj));
 }
@@ -238,7 +239,7 @@ function SendResponseToUnity(functionName, k, resonseData)
   window.unityGame.SendMessage(unityFirebaseGameOjbectName, functionName, JSON.stringify(resonseData));
 }
 
-function setValueTT(nodeKey, jsonData) 
+function setValueTT(nodeKey, jsonData)
 {
   if(firebase.auth().currentUser != null)
   {
@@ -314,7 +315,7 @@ async function callCloudFunctionNew(functionId, jsonData, key, region, count)
   if(firebase.auth().currentUser != null)
   {
     try
-    {  
+    {
       const dataObject = JSON.parse(jsonData);
       var functionRef = firebase.app().functions(region).httpsCallable(functionId + "Multi");
 
@@ -344,13 +345,13 @@ async function callCloudFunctionNew(functionId, jsonData, key, region, count)
         logCloudFunctionError("v5-" + count + "-n", jsonData, "null FB response", functionId);
         return false;
       }
-    } catch (error) 
+    } catch (error)
     {
       cloudFunctionFail++;
       logCloudFunctionError("v5-" + count + "-e", jsonData, error.message, functionId);
       lastError = error.message;
       return false;
-    } 
+    }
   }
 }
 
@@ -388,21 +389,21 @@ function logCloudFunctionSuccess(debugErrorRootNode, jsonData, functionId)
   var currentTime = new Date().getTime();
   var debugErrorNode = "cferror/" + debugErrorRootNode + "/" + firebaseUid + "/" + functionId + "/" + currentTime;
   const dbRef = firebase.database().ref();
-   
+
   dbRef.child(debugErrorNode).set({
-    errorData: jsonData,
-    os: getOS(),
-    time : currentTime,
-    successCount : cloudFunctionSuccess,
-    failCount : cloudFunctionFail,
-  }, (setValueError) => {
-    if (setValueError) {
-        console.log("logCloudFunctionSuccess setValueError:: " + setValueError.message);
-        
-      } else {
-        console.log("logCloudFunctionSuccess Success ");
+        errorData: jsonData,
+        os: getOS(),
+        time : currentTime,
+        successCount : cloudFunctionSuccess,
+        failCount : cloudFunctionFail,
+      }, (setValueError) => {
+        if (setValueError) {
+          console.log("logCloudFunctionSuccess setValueError:: " + setValueError.message);
+
+        } else {
+          console.log("logCloudFunctionSuccess Success ");
+        }
       }
-    }
   );
 }
 
@@ -412,7 +413,7 @@ function getCurrentUserId()
   {
     return firebase.auth().currentUser.uid;
   }
-  return "";    
+  return "";
 }
 
 function getCurrentUserIsAnon()
@@ -421,12 +422,45 @@ function getCurrentUserIsAnon()
   {
     return firebase.auth().currentUser.isAnonymous;
   }
-  return true;   
+  return true;
+}
+
+var userNoAdsEndTimestamp;
+function getUserNoAdsEndTimestamp()
+{
+  if (typeof firebase !== 'undefined' && firebase.database() != null && firebase.auth() != null)
+  {
+    try
+    {
+      var uid = getCurrentUserId();
+
+      if(uid != null && uid !== "")
+      {
+        const dbRef = firebase.database().ref();
+
+        dbRef.child(`users/${uid}/udro/noAdsEndTimestamp`).once("value").then((snapshot) =>
+        {
+          if (snapshot.exists())
+          {
+            userNoAdsEndTimestamp = snapshot.val();
+          }
+          else
+          {
+            userNoAdsEndTimestamp = 0;
+          }
+        });
+      }
+    }
+    catch (e)
+    {
+      console.log(e);
+    }
+  }
 }
 
 window.addEventListener('load', function() {
   console.log('Init Auth');
-  if (typeof firebase !== 'undefined' && firebase.auth() != null) 
+  if (typeof firebase !== 'undefined' && firebase.auth() != null)
   {
     firebase.auth().onAuthStateChanged(onAuthStateChanged);
     checkForRedirect();
