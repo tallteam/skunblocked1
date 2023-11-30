@@ -497,5 +497,9 @@ function updateLoadingAdBanner()
       showMainMenuBanner();
       clearInterval(loadingAdBannerIntervalId);
     }
+    else if(userNoAdsEndTimestamp != null)
+    {
+      clearInterval(loadingAdBannerIntervalId);
+    }
   }, loadingAdBannerPollDelay);
 }

@@ -227,6 +227,26 @@ function getCrazyGamesShareLinkJS(roomName, gameMode, levelName)
     });
 }
 
+function showCrazyGamesInviteButton(roomName, gameMode, levelName)
+{
+    return window.CrazyGames.SDK.game.showInviteButton({ room: roomName, mode: gameMode, arena: levelName }, (error, link) => 
+    {
+        if (error) 
+        {
+            console.log("Invite link error (callback)", error);
+        } else 
+        {
+            console.log("Invite link (callback)", link);
+        }
+    });
+}
+
+function hideCrazyGamesInviteButton()
+{
+    window.CrazyGames.SDK.game.hideInviteButton();
+}
+
+
 function recordGameplayStart()
 {
     if(cgEnvDisabled)
@@ -251,8 +271,11 @@ function recordHappyTime()
     window.CrazyGames.SDK.game.happytime();
 }
 
+
+
 window.CrazyGames.SDK.getEnvironment((_error, environment) =>
 {
     console.log(environment); // 'local', 'crazygames' or 'disabled'
     cgEnvDisabled = (environment === "disabled");
 });
+

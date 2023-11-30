@@ -1,9 +1,11 @@
 <linker>
   <assembly fullname="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="ApplyQualitySettingsToGameObject" preserve="all" />
     <type fullname="ArenaBoost" preserve="all" />
     <type fullname="AutoDetectQuality" preserve="all" />
     <type fullname="AwardSeasonPointsSequence" preserve="all" />
     <type fullname="AwardXpSequence" preserve="all" />
+    <type fullname="BillboardArenaObject" preserve="all" />
     <type fullname="BoostCollectable" preserve="all" />
     <type fullname="BoostCollectableService" preserve="all" />
     <type fullname="BotLorePanel" preserve="all" />
@@ -84,6 +86,7 @@
     <type fullname="ProgressBar" preserve="all" />
     <type fullname="SeasonWidget" preserve="all" />
     <type fullname="SmashKartsTeamsManager" preserve="all" />
+    <type fullname="SnowArenaGlowPulse" preserve="all" />
     <type fullname="SpawnManager" preserve="all" />
     <type fullname="SpawnPoint" preserve="all" />
     <type fullname="SpecialLootboxManager" preserve="all" />
@@ -171,6 +174,7 @@
     <type fullname="UnityEngine.MeshFilter" preserve="all" />
     <type fullname="UnityEngine.MeshRenderer" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
+    <type fullname="UnityEngine.Projector" preserve="all" />
     <type fullname="UnityEngine.RectTransform" preserve="all" />
     <type fullname="UnityEngine.RenderSettings" preserve="all" />
     <type fullname="UnityEngine.Shader" preserve="all" />
