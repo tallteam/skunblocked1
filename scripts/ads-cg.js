@@ -215,7 +215,7 @@ function getCrazyGamesShareLinkJS(roomName, gameMode, levelName)
     if(cgEnvDisabled)
         return;
     
-    return window.CrazyGames.SDK.game.inviteLink({ room: roomName, mode: gameMode, arena: levelName }, (error, link) => 
+    window.CrazyGames.SDK.game.inviteLink({ room: roomName, mode: gameMode, arena: levelName }, (error, link) => 
     {
         if (error) 
         {
@@ -223,13 +223,14 @@ function getCrazyGamesShareLinkJS(roomName, gameMode, levelName)
         } else 
         {
             console.log("Invite link (callback)", link);
+            window.unityGame.SendMessage(unityFirebaseGameOjbectName, "CrazyGamesShareLinkCreated", link);
         }
     });
 }
 
 function showCrazyGamesInviteButton(roomName, gameMode, levelName)
 {
-    return window.CrazyGames.SDK.game.showInviteButton({ room: roomName, mode: gameMode, arena: levelName }, (error, link) => 
+    window.CrazyGames.SDK.game.showInviteButton({ room: roomName, mode: gameMode, arena: levelName }, (error, link) => 
     {
         if (error) 
         {
