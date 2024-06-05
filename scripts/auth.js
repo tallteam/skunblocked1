@@ -60,32 +60,34 @@ function linkUserWithEmail(email, password)
   }
 }
 
-function checkForRedirect()
-{
-  firebase.auth().getRedirectResult().then(function(result)
-  {
-    console.log("linkOrSignInWithGoogle:success");
-    sendAuthDataToUnity();
-  }, function(error)
-  {
-    if(error.code == "auth/credential-already-in-use")
-    {
-      console.log("linkOrSignInWithGoogle:fail auth/credential-already-in-use try signInWithCredential");
-      firebase.auth().signInWithCredential(error.credential).catch(function(error)
-      {
-        console.log("signInWithCredential:: Error logging in " + error.code);
-        console.error(error);
-        window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseSignInWithEmailFailed", error.message);
-      });
-    }
-    else
-    {
-      console.log("linkOrSignInWithGoogle:: Error logging in " + error.code);
-      console.error(error);
-      window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseLinkUserWithEmailFailed", error.message);
-    }
-  });
-}
+//@podonnell: Turn off linkWithRedirect for mobile etc. as this was previously only being used because linkWithPopup was causing issues
+//These seem to have been fixed at some stage probably some upgrade of firebase
+// function checkForRedirect()
+// {
+//   firebase.auth().getRedirectResult().then(function(result)
+//   {
+//     console.log("linkOrSignInWithGoogle:success");
+//     sendAuthDataToUnity();
+//   }, function(error)
+//   {
+//     if(error.code == "auth/credential-already-in-use")
+//     {
+//       console.log("linkOrSignInWithGoogle:fail auth/credential-already-in-use try signInWithCredential");
+//       firebase.auth().signInWithCredential(error.credential).catch(function(error)
+//       {
+//         console.log("signInWithCredential:: Error logging in " + error.code);
+//         console.error(error);
+//         window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseSignInWithEmailFailed", error.message);
+//       });
+//     }
+//     else
+//     {
+//       console.log("linkOrSignInWithGoogle:: Error logging in " + error.code);
+//       console.error(error);
+//       window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseLinkUserWithEmailFailed", error.message);
+//     }
+//   });
+// }
 
 function linkOrSignInWithGoogle()
 {
@@ -93,12 +95,14 @@ function linkOrSignInWithGoogle()
 
   if(firebase.auth().currentUser != null && firebase.auth().currentUser.isAnonymous)
   {
-    var isSafariBrowser = (navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') <= -1);
-    if(isMobile() || isSafariBrowser)
-    {
-      firebase.auth().currentUser.linkWithRedirect(provider);
-    }
-    else
+    //@podonnell: Turn off linkWithRedirect for mobile etc. as this was previously only being used because linkWithPopup was causing issues
+    //These seem to have been fixed at some stage probably some upgrade of firebase
+    // var isSafariBrowser = (navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') <= -1);
+    // if(isMobile() || isSafariBrowser)
+    // {
+    //   firebase.auth().currentUser.linkWithRedirect(provider);
+    // }
+    // else
     {
       firebase.auth().currentUser.linkWithPopup(provider).then((result) =>
       {
@@ -132,12 +136,14 @@ function linkOrSignInWithApple()
 
   if(firebase.auth().currentUser != null && firebase.auth().currentUser.isAnonymous)
   {
-    var isSafariBrowser = (navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') <= -1);
-    if(isMobile() || isSafariBrowser)
-    {
-      firebase.auth().currentUser.linkWithRedirect(provider);
-    }
-    else
+    //@podonnell: Turn off linkWithRedirect for mobile etc. as this was previously only being used because linkWithPopup was causing issues
+    //These seem to have been fixed at some stage probably some upgrade of firebase
+    // var isSafariBrowser = (navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') <= -1);
+    // if(isMobile() || isSafariBrowser)
+    // {
+    //   firebase.auth().currentUser.linkWithRedirect(provider);
+    // }
+    // else
     {
       firebase.auth().currentUser.linkWithPopup(provider).then((result) =>
       {
@@ -471,7 +477,10 @@ window.addEventListener('load', function() {
   if (typeof firebase !== 'undefined' && firebase.auth() != null)
   {
     firebase.auth().onAuthStateChanged(onAuthStateChanged);
-    checkForRedirect();
+
+    //@podonnell: Turn off linkWithRedirect for mobile etc. as this was previously only being used because linkWithPopup was causing issues
+    //These seem to have been fixed at some stage probably some upgrade of firebase
+    //checkForRedirect();
   }
 }, false);
 
