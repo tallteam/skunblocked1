@@ -54,6 +54,7 @@
     <type fullname="InGameScreenManager" preserve="all" />
     <type fullname="InputTouchesAutoDrive" preserve="all" />
     <type fullname="InputTouchesManual" preserve="all" />
+    <type fullname="JoystickMove" preserve="all" />
     <type fullname="JumpForce" preserve="all" />
     <type fullname="LavaRockSFX" preserve="all" />
     <type fullname="Leaderboard" preserve="all" />
@@ -92,11 +93,13 @@
     <type fullname="SpawnPoint" preserve="all" />
     <type fullname="SpecialLootboxManager" preserve="all" />
     <type fullname="StarrySkyStaticParticleSystem" preserve="all" />
+    <type fullname="SteeringWheelMove" preserve="all" />
     <type fullname="TeamPicker" preserve="all" />
     <type fullname="UIGlint" preserve="all" />
     <type fullname="UIGradient" preserve="all" />
     <type fullname="UnityStandardAssets.Cameras.ProtectCameraFromWallClip" preserve="all" />
     <type fullname="UnityStandardAssets.Utility.AutoMoveAndRotate" preserve="all" />
+    <type fullname="VariableJoystick" preserve="all" />
     <type fullname="VehicleBullet" preserve="all" />
     <type fullname="VehicleCamera" preserve="all" />
     <type fullname="VehicleCameraManager" preserve="all" />
@@ -112,6 +115,43 @@
     <type fullname="Photon.Pun.UtilityScripts.PhotonTeam" preserve="nothing" serialized="true" />
     <type fullname="RoundStatsData" preserve="nothing" serialized="true" />
     <type fullname="UnityStandardAssets.Utility.AutoMoveAndRotate/Vector3andSpace" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="FluffyUnderware.DevTools, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="FluffyUnderware.DevTools.ComponentPool" preserve="all" />
+    <type fullname="FluffyUnderware.DevTools.PoolManager" preserve="all" />
+    <type fullname="FluffyUnderware.DevTools.FloatRegion" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.DevTools.IntRegion" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.DevTools.PoolSettings" preserve="nothing" serialized="true" />
+  </assembly>
+  <assembly fullname="ToolBuddy.Curvy, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <type fullname="FluffyUnderware.Curvy.CurvyGlobalManager" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.CurvySpline" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.CurvySplineSegment" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.CurvyGenerator" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.Modules.BuildRasterizedPath" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.Modules.BuildShapeExtrusion" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.Modules.BuildVolumeMesh" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.Modules.BuildVolumeSpots" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.Modules.CreateMesh" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.Modules.DeformMesh" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.Modules.GameObjectToMesh" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.Modules.InputGameObject" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.Modules.InputSplinePath" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.Modules.InputSplineShape" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.MetaCGOptions" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Pools.ArrayPoolsSettings" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.CurvyCGEvent" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.Curvy.CurvyControlPointEvent" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.Curvy.CurvySplineEvent" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.Curvy.Generator.CGBoundsGroup" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.Curvy.Generator.CGBoundsGroupItem" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.Curvy.Generator.CGGameObjectProperties" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.Curvy.Generator.CGMaterialSettingsEx" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.Curvy.Generator.CGMeshResourceCollection" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.Curvy.Generator.CGModuleInputSlot" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.Curvy.Generator.CGModuleLink" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.Curvy.Generator.CGModuleOutputSlot" preserve="nothing" serialized="true" />
+    <type fullname="FluffyUnderware.Curvy.Generator.CGModuleProperties" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="Unity.Addressables, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
     <type fullname="UnityEngine.AddressableAssets.Addressables" preserve="all" />
@@ -238,6 +278,9 @@
     <type fullname="UnityEngine.Canvas" preserve="all" />
     <type fullname="UnityEngine.CanvasGroup" preserve="all" />
     <type fullname="UnityEngine.CanvasRenderer" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEditor.CoreModule">
+    <type fullname="UnityEditor.AnimatedValues.AnimBool" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="UnityEngine.TextCoreFontEngineModule">
     <type fullname="UnityEngine.TextCore.FaceInfo" preserve="nothing" serialized="true" />

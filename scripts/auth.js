@@ -9,7 +9,14 @@ function onAuthStateChanged(user) {
   {
     if(firstLoad)
     {
-      signInAnonymously();
+      if(window.customAuthToken != null)
+      {
+        signInWithCustomToken(window.customAuthToken);
+      }
+      else
+      {
+        signInAnonymously();
+      }
     }
   }
   else
@@ -20,6 +27,19 @@ function onAuthStateChanged(user) {
   firstLoad = false;
 }
 
+function signInWithCustomToken(token)
+{
+  firebase.auth().signInWithCustomToken(token)
+  .then((userCredential) => {
+    console.log("signInWithCustomToken Success");
+  })
+  .catch(function(error)
+  {
+    console.log("error logging in " + error.code);
+    console.error(error);
+    window.unityGame.SendMessage(unityFirebaseGameOjbectName, "firebaseSignInWithEmailFailed", error.message);
+  });
+}
 
 function signInAnonymously()
 {

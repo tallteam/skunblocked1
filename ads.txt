@@ -1,5 +1,5 @@
 ##################################
-# AdinPlay.com ads.txt - 2024-05-31
+# AdinPlay.com ads.txt - 2024-07-20
 ##################################
 
 OWNERDOMAIN=smashkarts.io
@@ -650,6 +650,15 @@ betweendigital.com, 44808, RESELLER
 adyoulike.com, 53264963677efeda057eef7db2cb305f, RESELLER
 freewheel.tv,1577878,RESELLER
 freewheel.tv,1577888,RESELLER
+dxkulture.com, 9533, DIRECT, 259726033fc4df0c
+dxkulture.com, 0098, DIRECT, 259726033fc4df0c
+adswizz.com,dxkulture,DIRECT
+adswizz.com,651,DIRECT
+pubmatic.com,164751,RESELLER,5d62403b186f2ace
+rubiconproject.com,26094,DIRECT,0bfd66d529a55807
+zetaglobal.net,790,DIRECT
+ssp.disqus.com,790,DIRECT
+video.unrulymedia.com,946176315,RESELLER
 
 #AdaptMX
 
@@ -796,5 +805,5 @@ smartadserver.com, 3490, DIRECT
 venatus.com, 65d46e3061359e50d0f3d853, DIRECT
 
 ##################################
-# AdinPlay.com ads.txt - 2024-05-31
+# AdinPlay.com ads.txt - 2024-07-20
 ##################################
