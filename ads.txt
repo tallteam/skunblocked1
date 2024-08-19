@@ -1,5 +1,5 @@
 ##################################
-# AdinPlay.com ads.txt - 2024-07-20
+# AdinPlay.com ads.txt - 2024-08-18
 ##################################
 
 OWNERDOMAIN=smashkarts.io
@@ -805,5 +805,5 @@ smartadserver.com, 3490, DIRECT
 venatus.com, 65d46e3061359e50d0f3d853, DIRECT
 
 ##################################
-# AdinPlay.com ads.txt - 2024-07-20
+# AdinPlay.com ads.txt - 2024-08-18
 ##################################
