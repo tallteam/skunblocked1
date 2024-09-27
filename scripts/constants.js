@@ -9,6 +9,13 @@ var videoAdProvider = AdProviderAdinplay;
 
 var playwireRampInitialised = false;
 
+var pwCommonScriptSrc = "scripts/ads-pw-common.js";
+var pwDisplayScriptSrc = "scripts/ads-pw-display.js";
+var pwVideoScriptSrc = "scripts/ads-pw-video.js";
+var adinplayDisplayScriptSrc = "scripts/ads-adinplay-display.js";
+var adinplayVideoScriptSrc = "scripts/ads-adinplay-video.js";
+var googleH5GamesVideoScriptSrc = "scripts/ads-google-h5-games-video.js";
+
 function isPlaywireEnabled()
 {
   return displayAdProvider === AdProviderPlaywire || videoAdProvider === AdProviderPlaywire;
@@ -59,3 +66,6 @@ var rightAdResolutionsMobile = [
 
 var currBtmAdIndex = -1;
 var currRightAdIndex = -1;
+
+var baitScriptSrc = "scripts/banger.js";
+var ccWorkerScriptSrc = "scripts/ccWorker.js";

@@ -219,13 +219,29 @@
 	var timerStart = Date.now();
 	var sentGameInstanceStartEvent = false;
 
+	// choose the data file based on whether there's support for the ASTC texture compression format
+	var dataFile = "/a71395315c0ec0598a7b5aa2622e3420.data.br";
+	var mobileDataFile = "/1efb8eb4a99f98c680800b4cdb6b5885.data.br";
+	
+	//safety check to ensure we dont try to use the mobileDataFile if the filename hasnt been parsed during the build phase
+	if(!mobileDataFile.includes("MOBILE_DATA_FILENAME"))
+	{
+		var c = document.createElement("canvas");
+		var gl = c.getContext("webgl");
+		var gl2 = c.getContext("webgl2");
+		if ((gl && gl.getExtension('WEBGL_compressed_texture_astc')) || (gl2 && gl2.getExtension('WEBGL_compressed_texutre_astc'))) 
+		{
+			dataFile = mobileDataFile;
+		}
+	}
+
 	const buildUrl = "Build";
 
 	const loaderUrl = buildUrl + "/76f034cff49013ce85bd6945ebf32347.loader.js";
 	const config = {
-		dataUrl: buildUrl + "/e6cca8f8eb9a8aa87c050e5432c8c1f1.data.br",
-		frameworkUrl: buildUrl + "/fad098eb76ef0434a31f8d06f29b37de.framework.js.br",
-		codeUrl: buildUrl + "/1d724d5e902c61d6bbecedf6e7a77159.wasm.br",
+		dataUrl: buildUrl + dataFile,
+		frameworkUrl: buildUrl + "/09b19c0600d2a69e2a58336426e6c252.framework.js.br",
+		codeUrl: buildUrl + "/706a8bc185e123f1ecba4bbfa021ba8a.wasm.br",
 		// #if MEMORY_FILENAME
 		//         memoryUrl: buildUrl + "/",
 		// #endif
@@ -235,7 +251,7 @@
 		streamingAssetsUrl: "StreamingAssets",
 		companyName: "TallTeam",
 		productName: "Smash Karts",
-		productVersion: "2.3.6",
+		productVersion: "2.3.7",
 	};
 
 	var mainContainer = document.querySelector("#mainContainer");

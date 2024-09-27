@@ -1,51 +1,23 @@
 'use strict';
 
-// //PLAYWIRE
-// if(isPlaywireEnabled())
-// {
-// 	document.write(`<script src="scripts/ads-pw-common.js">`);
-//
-// 	if(displayAdProvider === AdProviderPlaywire)
-// 	{
-// 		document.write(`<script src="scripts/ads-pw-display.js">`);
-// 	}
-//
-// 	if(videoAdProvider === AdProviderPlaywire)
-// 	{
-// 		document.write(`<script src="scripts/ads-pw-video.js">`);
-// 	}
-// }
-//
-// //ADINPLAY
-// if(isAdinPlayEnabled())
-// {
-// 	document.write(`<script src="scripts/ads-adinplay-display.js">`);
-// }
-//
-// //GOOGLE H5 GAMES
-// if(isGoogleH5GamesEnabled())
-// {
-// 	document.write(`<script src="scripts/ads-google-h5-games-video.js">`);
-// }
-
 //PLAYWIRE
 if(isPlaywireEnabled())
 {
     var pwCommonScript = document.createElement("script");
-    pwCommonScript.src = "scripts/ads-pw-common.js";
+    pwCommonScript.src = pwCommonScriptSrc;
     document.body.appendChild(pwCommonScript);
 
     if(displayAdProvider === AdProviderPlaywire)
     {
         var pwDisplayScript = document.createElement("script");
-        pwDisplayScript.src = "scripts/ads-pw-display.js";
+        pwDisplayScript.src = pwDisplayScriptSrc;
         document.body.appendChild(pwDisplayScript);
     }
 
     if(videoAdProvider === AdProviderPlaywire)
     {
         var pwVideoScript = document.createElement("script");
-        pwVideoScript.src = "scripts/ads-pw-video.js";
+        pwVideoScript.src = pwVideoScriptSrc;
         document.body.appendChild(pwVideoScript);
     }
 }
@@ -56,14 +28,14 @@ if(isAdinPlayEnabled())
     if(displayAdProvider === AdProviderAdinplay)
     {
         var adinplayDisplayScript = document.createElement("script");
-        adinplayDisplayScript.src = "scripts/ads-adinplay-display.js";
+        adinplayDisplayScript.src = adinplayDisplayScriptSrc;
         document.body.appendChild(adinplayDisplayScript);
     }
     
     if(videoAdProvider === AdProviderAdinplay)
     {
         var adinplayVideoScript = document.createElement("script");
-        adinplayVideoScript.src = "scripts/ads-adinplay-video.js";
+        adinplayVideoScript.src = adinplayVideoScriptSrc;
         document.body.appendChild(adinplayVideoScript);
     }
 }
@@ -72,6 +44,6 @@ if(isAdinPlayEnabled())
 if(isGoogleH5GamesEnabled())
 {
     var googleH5GamesVideoScript = document.createElement("script");
-    googleH5GamesVideoScript.src = "scripts/ads-google-h5-games-video.js";
+    googleH5GamesVideoScript.src = googleH5GamesVideoScriptSrc;
     document.body.appendChild(googleH5GamesVideoScript);
 }

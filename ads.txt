@@ -1,5 +1,5 @@
 ##################################
-# AdinPlay.com ads.txt - 2024-08-18
+# AdinPlay.com ads.txt - 2024-09-27
 ##################################
 
 OWNERDOMAIN=smashkarts.io
@@ -518,10 +518,6 @@ pubmatic.com, 160552, RESELLER, 5d62403b186f2ace                              # 
 pubmatic.com, 159401, RESELLER, 5d62403b186f2ace                              # PubMatic_2_6&7
 pubmatic.com, 163598, RESELLER, 5d62403b186f2ace                              # Pubmatic_OW
 richaudience.com, 1XvIoD5o0S, DIRECT                                          # Rich Audience_0_6&7
-pubmatic.com, 81564, DIRECT, 5d62403b186f2ace                                 # Rich Audience_0_6&7
-pubmatic.com, 156538, DIRECT, 5d62403b186f2ace                                # Rich Audience_0_6&7
-appnexus.com, 8233, DIRECT                                                    # Rich Audience_0_6&7
-rubiconproject.com, 13510, DIRECT                                             # Rich Audience_0_6&7
 risecodes.com, 5fa94677b2db6a00015b22a9, DIRECT                               # Rise
 pubmatic.com, 160295, RESELLER, 5d62403b186f2ace                              # Rise
 xandr.com, 14082, RESELLER                                                    # Rise
@@ -736,9 +732,9 @@ sonobi.com, 3ee2ca3952, RESELLER, d1a215d9eb5aee9e
 
 #Rich Audience
 
-richaudience.com, kWVs0vbyki, DIRECT
+richaudience.com, kWVs0vbyki, RESELLER
 appnexus.com, 2928, DIRECT, f5ab79cb980f11d1
-appnexus.com, 8233, DIRECT, f5ab79cb980f11d1
+smartadserver.com, 1999, RESELLER, 060d053dcf45cbf3 
 
 #Ozone
 
@@ -773,6 +769,7 @@ freewheel.tv, 1590601, RESELLER
 freewheel.tv, 1590606, RESELLER
 smartadserver.com, 4284, RESELLER
 adform.com, 3119, RESELLER, 9f5210a2f0999e32
+smaato.com, 1100057444, RESELLER, 07bcf65f187117b4   
 
 #Block
 blockthrough.com, 5130683165442048, DIRECT
@@ -805,5 +802,5 @@ smartadserver.com, 3490, DIRECT
 venatus.com, 65d46e3061359e50d0f3d853, DIRECT
 
 ##################################
-# AdinPlay.com ads.txt - 2024-08-18
+# AdinPlay.com ads.txt - 2024-09-27
 ##################################
