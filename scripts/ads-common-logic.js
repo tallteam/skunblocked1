@@ -103,7 +103,7 @@ function updateAdBlockDetected()
   if(window.adblockDetected)
     return;
 
-  var imgUrlTestPassed = false;
+  var imgUrlTestPassed = true; //should be false but disabling temporarily as previous img src url has been removed
   var fbDivTestPassed = false;
 
   //nested function
@@ -135,22 +135,23 @@ function updateAdBlockDetected()
       return;
     }
 
-    //test image pixel ad bait detection
-    var img = new Image();
-
-    img.onload = () =>
-    {
-      imgUrlTestPassed = true;
-      checkAllAsyncTestsComplete();
-    }
-
-    img.onerror = () =>
-    {
-      onUpdateAdBlockDetectedComplete("Img Url Test");
-      return;
-    };
-
-    img.src = 'https://px.moatads.com/pixel.gif';
+    //disabling temporarily as previous img src url has been removed
+    // //test image pixel ad bait detection
+    // var img = new Image();
+    //
+    // img.onload = () =>
+    // {
+    //   imgUrlTestPassed = true;
+    //   checkAllAsyncTestsComplete();
+    // }
+    //
+    // img.onerror = () =>
+    // {
+    //   onUpdateAdBlockDetectedComplete("Img Url Test");
+    //   return;
+    // };
+    //
+    // img.src = 'https://px.moatads.com/pixel.gif';
 
     //test bait divs from firebase ids
     if (typeof firebase !== 'undefined' && firebase.database() != null && firebase.auth() != null)
