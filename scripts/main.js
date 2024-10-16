@@ -240,3 +240,35 @@ function isFullscreen()
       window.CrazyGames.SDK.game.sdkGameLoadingStop();
     }
   }
+
+function isIFramed()
+{
+  try
+  {
+    if (window.self !== window.top)
+    {
+      return true;
+    }
+    else if (document.referrer)
+    {
+      return true;
+    }
+    else if (window.location !== window.parent.location)
+    {
+      //likely iframed (based on different locations)
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  catch (e)
+  {
+    if (e instanceof DOMException)
+    {
+      //Cross-origin error detected. Content is likely inside an iframe
+      return true;
+    }
+  }
+}

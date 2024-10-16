@@ -85,7 +85,10 @@ function destroyAd(adElementId)
 
 function requestLoadingAd()
 {
-    requestAd(adTagLoadingBanner, loadingBannerShownTimestamp);
+    if(!isIFramed())
+    {
+        requestAd(adTagLoadingBanner, loadingBannerShownTimestamp);
+    }
 }
 
 function hideLoadingAd()
@@ -95,7 +98,10 @@ function hideLoadingAd()
 
 function requestMainMenuAd()
 {
-    requestAd(adTagMainMenuBanner, mainMenuBannerShownTimestamp);
+    if(!isIFramed())
+    {
+        requestAd(adTagMainMenuBanner, mainMenuBannerShownTimestamp);
+    }
 }
 
 function hideMainMenuAd()
