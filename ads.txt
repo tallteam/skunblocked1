@@ -1,5 +1,5 @@
 ##################################
-# AdinPlay.com ads.txt - 2024-10-15
+# AdinPlay.com ads.txt - 2024-11-11
 ##################################
 
 OWNERDOMAIN=smashkarts.io
@@ -171,10 +171,6 @@ advertising.com, 25034, RESELLER
 sonobi.com, 783272317b, RESELLER, d1a215d9eb5aee9e
 spotxchange.com, 85519, RESELLER, 7842df1d2fe2db34
 indexexchange.com, 186684,RESELLER, 50b1c356f2c5c8fc
-
-#SpotX
-spotxchange.com, 267531, RESELLER, 7842df1d2fe2db34
-spotx.tv, 267531, RESELLER, 7842df1d2fe2db34
 
 #CPM
 appnexus.com, 9624, RESELLER, f5ab79cb980f11d1
@@ -804,5 +800,5 @@ smartadserver.com, 3490, DIRECT
 venatus.com, 65d46e3061359e50d0f3d853, DIRECT
 
 ##################################
-# AdinPlay.com ads.txt - 2024-10-15
+# AdinPlay.com ads.txt - 2024-11-11
 ##################################

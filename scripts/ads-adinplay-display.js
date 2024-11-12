@@ -11,6 +11,11 @@ const adTagDeathBannerMobile = "smashkarts-io_320x100";
 
 var currShownAdElementIds = [];
 
+const officialFullscreenIFramedProxies = [
+    "https://schoolkarts.com/",
+    "https://www.gstatic.com/"
+]
+
 function hasAdContent(adElementId)
 {
     const ad = document.getElementById(adElementId);
@@ -85,7 +90,7 @@ function destroyAd(adElementId)
 
 function requestLoadingAd()
 {
-    if(!isIFramed())
+    if(!isIFramed() || isOfficialFullscreenIFramedProxy())
     {
         requestAd(adTagLoadingBanner, loadingBannerShownTimestamp);
     }
@@ -98,7 +103,7 @@ function hideLoadingAd()
 
 function requestMainMenuAd()
 {
-    if(!isIFramed())
+    if(!isIFramed() || isOfficialFullscreenIFramedProxy())
     {
         requestAd(adTagMainMenuBanner, mainMenuBannerShownTimestamp);
     }
@@ -165,4 +170,10 @@ function hideOffCanvasAds(adResArray)
     adResArray.forEach(adRes => {
         destroyAd(adRes.adId);
     });
+}
+
+function isOfficialFullscreenIFramedProxy()
+{
+    const url = document.referrer; 
+    return url != null && officialFullscreenIFramedProxies.includes(url);
 }
