@@ -417,6 +417,10 @@ function showNonRewardedInterstitial(audioOn, interstitialType, interstitialName
     //showInterstitial(audioOn, 'next', 'winceremony')
     showInterstitial(audioOn, interstitialType, interstitialName)
   }
+  else
+  {
+    interstitialError(false);
+  }
 }
 
 function interstitialStart(rewarded)

@@ -219,8 +219,8 @@
 	var sentGameInstanceStartEvent = false;
 
 	// choose the data file based on whether there's support for the ASTC texture compression format
-	var dataFile = "/8cc19357c4de5c392c7bfb59957fb326.data.br";
-	var mobileDataFile = "/c092792b07ff325fe629e3ede35ba871.data.br";
+	var dataFile = "/90efe91f801d610332bf90c1816dc35c.data.br";
+	var mobileDataFile = "/256ba1845606cc1ffc04de0bef9a11de.data.br";
 	
 	//safety check to ensure we dont try to use the mobileDataFile if the filename hasnt been parsed during the build phase
 	if(!mobileDataFile.includes("MOBILE_DATA_FILENAME"))
@@ -239,8 +239,8 @@
 	const loaderUrl = buildUrl + "/76f034cff49013ce85bd6945ebf32347.loader.js";
 	const config = {
 		dataUrl: buildUrl + dataFile,
-		frameworkUrl: buildUrl + "/7fae0053942178dc3bf032edfcc1bd06.framework.js.br",
-		codeUrl: buildUrl + "/aa1733b0a1df8def3dec1b848891c84a.wasm.br",
+		frameworkUrl: buildUrl + "/30c621b0e8ed3cb0340ba8b4471ad16b.framework.js.br",
+		codeUrl: buildUrl + "/675ba714bfa48a8a4f921b09d30f7780.wasm.br",
 		// #if MEMORY_FILENAME
 		//         memoryUrl: buildUrl + "/",
 		// #endif
@@ -250,7 +250,7 @@
 		streamingAssetsUrl: "StreamingAssets",
 		companyName: "TallTeam",
 		productName: "Smash Karts",
-		productVersion: "2.4.0",
+		productVersion: "2.5.0",
 	};
 
 	var mainContainer = document.querySelector("#mainContainer");
