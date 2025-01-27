@@ -23,6 +23,7 @@
     <type fullname="Crystal.SafeArea" preserve="all" />
     <type fullname="CullingGroup" preserve="all" />
     <type fullname="CullingManager" preserve="all" />
+    <type fullname="CustomizationImageData" preserve="all" />
     <type fullname="DontGoThroughThings" preserve="all" />
     <type fullname="FirebaseDynamicLinkCreator" preserve="all" />
     <type fullname="FlagCollectableCollider" preserve="all" />
@@ -43,7 +44,9 @@
     <type fullname="GameTutorialPopupWidget" preserve="all" />
     <type fullname="GenericObjectPooler" preserve="all" />
     <type fullname="GenericPoolableObject" preserve="all" />
+    <type fullname="HatData" preserve="all" />
     <type fullname="HatHolderHudIcon" preserve="all" />
+    <type fullname="HatsTransformTransferHelper" preserve="all" />
     <type fullname="HealthCircle" preserve="all" />
     <type fullname="HUDLeaderboard" preserve="all" />
     <type fullname="ImgPopAndTransitionEffect" preserve="all" />
@@ -54,6 +57,7 @@
     <type fullname="InGameScreenManager" preserve="all" />
     <type fullname="InputTouchesAutoDrive" preserve="all" />
     <type fullname="InputTouchesManual" preserve="all" />
+    <type fullname="ItemDataHolder" preserve="all" />
     <type fullname="JoystickMove" preserve="all" />
     <type fullname="JumpForce" preserve="all" />
     <type fullname="LavaRockSFX" preserve="all" />
@@ -72,6 +76,7 @@
     <type fullname="ObjectPooler" preserve="all" />
     <type fullname="OffsetScrolling" preserve="all" />
     <type fullname="OnlinePresenceUI" preserve="all" />
+    <type fullname="ParticleSystemActions" preserve="all" />
     <type fullname="PauseScreen" preserve="all" />
     <type fullname="Photon.Pun.UtilityScripts.PhotonTeamsManager" preserve="all" />
     <type fullname="PhotonSocial" preserve="all" />
@@ -82,10 +87,12 @@
     <type fullname="PlayerStatsPanel" preserve="all" />
     <type fullname="PointerEventsAutoDrive" preserve="all" />
     <type fullname="PointerEventsManual" preserve="all" />
+    <type fullname="PopcornCelebrationSound" preserve="all" />
     <type fullname="PowerWidget" preserve="all" />
     <type fullname="PressAnyKeyToDisable" preserve="all" />
     <type fullname="ProgressBar" preserve="all" />
     <type fullname="SeasonWidget" preserve="all" />
+    <type fullname="SkinnedHatPositioner" preserve="all" />
     <type fullname="SkipTutorialPopup" preserve="all" />
     <type fullname="SmashKartsTeamsManager" preserve="all" />
     <type fullname="SnowArenaGlowPulse" preserve="all" />
@@ -97,19 +104,22 @@
     <type fullname="TeamPicker" preserve="all" />
     <type fullname="UIGlint" preserve="all" />
     <type fullname="UIGradient" preserve="all" />
+    <type fullname="UIVehicle" preserve="all" />
     <type fullname="UnityStandardAssets.Cameras.ProtectCameraFromWallClip" preserve="all" />
     <type fullname="UnityStandardAssets.Utility.AutoMoveAndRotate" preserve="all" />
     <type fullname="VariableJoystick" preserve="all" />
     <type fullname="VehicleBullet" preserve="all" />
     <type fullname="VehicleCamera" preserve="all" />
     <type fullname="VehicleCameraManager" preserve="all" />
+    <type fullname="VehicleCelebration" preserve="all" />
+    <type fullname="VehicleCharacter" preserve="all" />
     <type fullname="VehicleMobileUI" preserve="all" />
-    <type fullname="VehicleSelection" preserve="all" />
     <type fullname="WifiWarning" preserve="all" />
     <type fullname="WinCeremonyAdManager" preserve="all" />
     <type fullname="XpBoostPopup" preserve="all" />
     <type fullname="XpMultiplierBtn" preserve="all" />
     <type fullname="XpWidget" preserve="all" />
+    <type fullname="ItemData" preserve="nothing" serialized="true" />
     <type fullname="FriendRequestSpriteMap" preserve="nothing" serialized="true" />
     <type fullname="ObjectPoolItem" preserve="nothing" serialized="true" />
     <type fullname="Photon.Pun.UtilityScripts.PhotonTeam" preserve="nothing" serialized="true" />
@@ -127,6 +137,7 @@
     <type fullname="FluffyUnderware.Curvy.CurvyGlobalManager" preserve="all" />
     <type fullname="FluffyUnderware.Curvy.CurvySpline" preserve="all" />
     <type fullname="FluffyUnderware.Curvy.CurvySplineSegment" preserve="all" />
+    <type fullname="FluffyUnderware.Curvy.Generator.CGMeshResource" preserve="all" />
     <type fullname="FluffyUnderware.Curvy.Generator.CurvyGenerator" preserve="all" />
     <type fullname="FluffyUnderware.Curvy.Generator.Modules.BuildRasterizedPath" preserve="all" />
     <type fullname="FluffyUnderware.Curvy.Generator.Modules.BuildShapeExtrusion" preserve="all" />
@@ -155,6 +166,7 @@
   </assembly>
   <assembly fullname="Unity.Addressables, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
     <type fullname="UnityEngine.AddressableAssets.Addressables" preserve="all" />
+    <type fullname="UnityEngine.AddressableAssets.AssetReference" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="Unity.AI.Navigation, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="Unity.AI.Navigation.NavMeshSurface" preserve="all" />
@@ -197,6 +209,7 @@
   <assembly fullname="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
     <type fullname="UnityEngine.AnimationClip" preserve="all" />
     <type fullname="UnityEngine.Animator" preserve="all" />
+    <type fullname="UnityEngine.Avatar" preserve="all" />
     <type fullname="UnityEngine.RuntimeAnimatorController" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
@@ -212,6 +225,7 @@
     <type fullname="UnityEngine.Light" preserve="all" />
     <type fullname="UnityEngine.LightingSettings" preserve="all" />
     <type fullname="UnityEngine.LightmapSettings" preserve="all" />
+    <type fullname="UnityEngine.LineRenderer" preserve="all" />
     <type fullname="UnityEngine.Material" preserve="all" />
     <type fullname="UnityEngine.Mesh" preserve="all" />
     <type fullname="UnityEngine.MeshFilter" preserve="all" />

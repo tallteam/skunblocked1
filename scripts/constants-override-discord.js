@@ -1,5 +1,7 @@
 'use strict';
 
+enableFirebaseAnalytics = false;
+
 pwCommonScriptSrc = ".proxy/scripts/ads-pw-common.js";
 pwDisplayScriptSrc = ".proxy/scripts/ads-pw-display.js";
 pwVideoScriptSrc = ".proxy/scripts/ads-pw-video.js";

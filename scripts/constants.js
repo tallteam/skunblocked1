@@ -1,5 +1,7 @@
 'use strict';
 
+let enableFirebaseAnalytics = true;
+
 //ADS
 const AdProviderPlaywire = "Playwire";
 const AdProviderGoogleH5Games = "GoogleH5Games";

@@ -90,10 +90,13 @@ function destroyAd(adElementId)
 
 function requestLoadingAd()
 {
-    if(!isIFramed() || isOfficialFullscreenIFramedProxy())
-    {
-        requestAd(adTagLoadingBanner, loadingBannerShownTimestamp);
-    }
+    requestAd(adTagLoadingBanner, loadingBannerShownTimestamp);
+
+    //@podonnell: breaking rev - Dec 11th
+    //if(!isIFramed() || isOfficialFullscreenIFramedProxy())
+    // {
+    //     requestAd(adTagLoadingBanner, loadingBannerShownTimestamp);
+    // }
 }
 
 function hideLoadingAd()
@@ -103,10 +106,13 @@ function hideLoadingAd()
 
 function requestMainMenuAd()
 {
-    if(!isIFramed() || isOfficialFullscreenIFramedProxy())
-    {
-        requestAd(adTagMainMenuBanner, mainMenuBannerShownTimestamp);
-    }
+    requestAd(adTagMainMenuBanner, mainMenuBannerShownTimestamp);
+
+    //@podonnell: breaking rev - Dec 11th
+    // if(!isIFramed() || isOfficialFullscreenIFramedProxy())
+    // {
+    //     requestAd(adTagMainMenuBanner, mainMenuBannerShownTimestamp);
+    // }
 }
 
 function hideMainMenuAd()

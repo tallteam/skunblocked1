@@ -110,23 +110,29 @@ window.copyText = function (text) {
 
 function firebaseLogEvent(eventName)
 {
-  if(firebase.analytics != null) firebase.analytics().logEvent(eventName);
+  if(enableFirebaseAnalytics && firebase.analytics != null)
+    firebase.analytics().logEvent(eventName);
 }
 
 function firebaseSetScreen(screenName)
 {
-  if(firebase.analytics != null) firebase.analytics().setCurrentScreen(screenName);  
-  if(firebase.analytics != null) firebase.analytics().logEvent("screen_view", { "screen_name": screenName})
+  if(enableFirebaseAnalytics && firebase.analytics != null)
+  {
+    firebase.analytics().setCurrentScreen(screenName);
+    firebase.analytics().logEvent("screen_view", { "screen_name": screenName})
+  }
 }
 
 function firebaseLogEventWithParam(eventName, p, v)
 {
-  if(firebase.analytics != null) firebase.analytics().logEvent(eventName, { [p]: v});
+  if(enableFirebaseAnalytics && firebase.analytics != null)
+    firebase.analytics().logEvent(eventName, { [p]: v});
 }
 
 function firebaseLogEventWithParamDict(eventName, paramsDict)
 {
-  if(firebase.analytics != null) firebase.analytics().logEvent(eventName, paramsDict);
+  if(enableFirebaseAnalytics && firebase.analytics != null)
+    firebase.analytics().logEvent(eventName, paramsDict);
 }
 
 var fs = false;
@@ -245,30 +251,18 @@ function isIFramed()
 {
   try
   {
+    // Check if the current window is not the top-level window
     if (window.self !== window.top)
     {
       return true;
     }
-    else if (document.referrer)
-    {
-      return true;
-    }
-    else if (window.location !== window.parent.location)
-    {
-      //likely iframed (based on different locations)
-      return true;
-    }
-    else
-    {
-      return false;
-    }
   }
   catch (e)
   {
-    if (e instanceof DOMException)
-    {
-      //Cross-origin error detected. Content is likely inside an iframe
-      return true;
-    }
+    // If a cross-origin error occurs, assume the content is iframed
+    return true;
   }
+
+  // Default case: Not iframed
+  return false;
 }
