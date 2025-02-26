@@ -44,6 +44,7 @@
     <type fullname="GameTutorialPopupWidget" preserve="all" />
     <type fullname="GenericObjectPooler" preserve="all" />
     <type fullname="GenericPoolableObject" preserve="all" />
+    <type fullname="GunGameUIManager" preserve="all" />
     <type fullname="HatData" preserve="all" />
     <type fullname="HatHolderHudIcon" preserve="all" />
     <type fullname="HatsTransformTransferHelper" preserve="all" />

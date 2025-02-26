@@ -92,70 +92,49 @@
 
 <body>
 <div id="mainContainer">
-	<div id="mainContainerBg"></div>
-	<div id="leftContainer">
-		<div id="gameContainer">
+	<div id="gameContainer">
+		<div id="gameCanvasWrapper">
 			<canvas id="gameCanvas"></canvas>
-
-			<!-- On canvas ad containers -->
-			<div id="adContainerLoadingLeft"> <!-- loading -->
-				<div id="smashkarts-io_300x600_2"></div> <!-- adinplay -->
-			</div>	
-			<div id="adContainerMainMenu"> <!-- main menu -->
-				<div id="smashkarts-io_300x250"></div> <!-- adinplay -->
-			
-				<!-- playwire -->
-				<div id="pw_mainmenu"></div>
-				<!-- dummy placement to ensure rewarded videos init correctly when ads are disabled for season pass holders -->
-				<div id="pw_mainmenu_dummy" data-pw-desk="med_rect_atf" data-pw-mobi="med_rect_atf"></div> 
-			</div>
-			<div id="adContainerWin"> <!-- win ceremony -->
-				<div id="smashkarts-io_300x250_2"></div> <!-- adinplay -->
-
-				<!-- playwire -->
-				<div id="pw_roundend"></div>
-				<!-- <div data-pw-desk="med_rect_btf" data-pw-mobi="med_rect_btf"></div> -->
-			</div>
-			<div id="adContainerSpectate"> <!-- spectate -->
-				<div id="smashkarts-io_300x250_3"></div> <!-- adinplay -->
-			</div>
-			<div id="adContainerDeath"> <!-- death -->
-
-				<!-- adinplay -->
-				<div id="smashkarts-io_728x90-new"></div>
-				<div id="smashkarts-io_320x100"></div>
-
-				<!-- playwire -->
-				<div id="pw_ondeath"></div>
-				<!-- <div data-pw-desk="leaderboard_atf" data-pw-mobi="leaderboard_atf"></div> -->
-			</div>
 		</div>
-		<div id="btmContainer">
-			<div id="btmAdPlaceholder">
-				<div id="btmAdPlaceholderBg"></div>
-				<div id="btmAdBlockerContainer">
-					<img id="btmAdBlockerImg" src="images/turnoffadblock.png">
-					<h1 id="btmAdBlockerText">Disable AdBlock for extra XP</h1>
-				</div>
-			</div>
-			<h1 id="btmAdResText">unset</h1>
+
+		<!-- On canvas ad containers -->
+		<div id="adContainerLoadingLeft"> <!-- loading -->
+			<div id="smashkarts-io_300x600_2"></div> <!-- adinplay -->
 		</div>
-		<div id="pw-video-container"> <!-- playwire -->
-			<div id="pw-video-placeholder"></div>
+		<div id="adContainerMainMenu"> <!-- main menu -->
+			<div id="smashkarts-io_300x250"></div> <!-- adinplay -->
+
+			<!-- playwire -->
+			<div id="pw_mainmenu"></div>
+			<!-- dummy placement to ensure rewarded videos init correctly when ads are disabled for season pass holders -->
+			<div id="pw_mainmenu_dummy" data-pw-desk="med_rect_atf" data-pw-mobi="med_rect_atf"></div>
 		</div>
-		<div id="preroll"></div> <!-- adinplay -->
-		<iframe id="xsolla-iframe"></iframe>
+		<div id="adContainerWin"> <!-- win ceremony -->
+			<div id="smashkarts-io_300x250_2"></div> <!-- adinplay -->
+
+			<!-- playwire -->
+			<div id="pw_roundend"></div>
+			<!-- <div data-pw-desk="med_rect_btf" data-pw-mobi="med_rect_btf"></div> -->
+		</div>
+		<div id="adContainerSpectate"> <!-- spectate -->
+			<div id="smashkarts-io_300x250_3"></div> <!-- adinplay -->
+		</div>
+		<div id="adContainerDeath"> <!-- death -->
+
+			<!-- adinplay -->
+			<div id="smashkarts-io_728x90-new"></div>
+			<div id="smashkarts-io_320x100"></div>
+
+			<!-- playwire -->
+			<div id="pw_ondeath"></div>
+			<!-- <div data-pw-desk="leaderboard_atf" data-pw-mobi="leaderboard_atf"></div> -->
+		</div>
 	</div>
-	<div id="rightContainer">
-		<div id="rightAdPlaceholder">
-			<div id="rightAdPlaceholderBg"></div>
-			<div id="rightAdBlockerContainer">
-				<img id="rightAdBlockerImg" src="images/turnoffadblock.png">
-				<h1 id="rightAdBlockerText">Disable AdBlock for extra XP</h1>
-			</div>
-		</div>
-		<h1 id="rightAdResText">unset</h1>
+	<div id="pw-video-container"> <!-- playwire -->
+		<div id="pw-video-placeholder"></div>
 	</div>
+	<div id="preroll"></div> <!-- adinplay -->
+	<iframe id="xsolla-iframe"></iframe>
 </div>
 <div id="loader">
 	<img class="logo" src="images/smashkarts.png">
@@ -180,7 +159,7 @@
 <script src="scripts/cc.js"></script>
  
 <script src="scripts/ads-common-logic.js"></script>
-<script src="scripts/ads-offcanvas-logic.js"></script>
+<!--<script src="scripts/ads-offcanvas-logic.js"></script>-->
 <script src="scripts/ads-positioning-logic.js"></script>
 <script src="scripts/ads-injector.js"></script>
 
@@ -221,8 +200,8 @@
 	var sentGameInstanceStartEvent = false;
 
 	// choose the data file based on whether there's support for the ASTC texture compression format
-	var dataFile = "/f800a46e6dd608e4a2b3059ba4707938.data.br";
-	var mobileDataFile = "/580c03bbee85a0fbd586162febb28b01.data.br";
+	var dataFile = "/52403757691c109c83f9fc48c9986978.data.br";
+	var mobileDataFile = "/b76225492c7f8d382bdfb6e73f2d697e.data.br";
 	
 	//safety check to ensure we dont try to use the mobileDataFile if the filename hasnt been parsed during the build phase
 	if(!mobileDataFile.includes("MOBILE_DATA_FILENAME"))
@@ -241,8 +220,8 @@
 	const loaderUrl = buildUrl + "/76f034cff49013ce85bd6945ebf32347.loader.js";
 	const config = {
 		dataUrl: buildUrl + dataFile,
-		frameworkUrl: buildUrl + "/1c904c1d8e7110fc7d2c33884479c8d0.framework.js.br",
-		codeUrl: buildUrl + "/490eef7eb6d3ba0376a5851f590ad3c0.wasm.br",
+		frameworkUrl: buildUrl + "/cc8c3769fc3268388bb68c99d0e94634.framework.js.br",
+		codeUrl: buildUrl + "/d43b1698cd952b71fc4c971cad44b094.wasm.br",
 		// #if MEMORY_FILENAME
 		//         memoryUrl: buildUrl + "/",
 		// #endif
@@ -261,15 +240,7 @@
 	var loadingBar = document.querySelector("#loader");
 	var progressBarFull = document.querySelector("#loader .progress .full");
 	var rotateLandscape = document.querySelector("#rotate-landscape");
-
-	var btmAdContainer = document.getElementById("btmContainer");
-	var btmAdPlaceholder = document.getElementById("btmAdPlaceholder");
-	var btmAdResText = document.getElementById("btmAdResText");
-
-	var rightAdContainer = document.getElementById("rightContainer");
-	var rightAdPlaceholder = document.getElementById("rightAdPlaceholder");
-	var rightAdResText = document.getElementById("rightAdResText");
-
+	
 	if (isMobile())
 	{
 		mainContainer.className = "unity-mobile";
@@ -370,36 +341,6 @@
 		//set adinplay subid which enables segmented daily reports
 		aiptag.subid = val;
 	}
-
-	function onLoad()
-	{
-		updateGameCanvasSize();
-	}
-
-	function onResize()
-	{
-		updateGameCanvasSize();
-	}
-
-	function updateGameCanvasSize()
-	{
-		//set game canvas size
-		var borderWidth = displayingRightAd() ? offCanvasBorderSize : 0;
-		var borderHeight = displayingBtmAd() ?  offCanvasBorderSize : 0;
-
-		//main container padding
-		var mainContainerStyle = getComputedStyle(mainContainer);
-		var mainContainerPadLeft = parseInt(mainContainerStyle.getPropertyValue("padding-left"));
-		var mainContainerPadRight = parseInt(mainContainerStyle.getPropertyValue("padding-right"));
-		var mainContainerPadTop = parseInt(mainContainerStyle.getPropertyValue("padding-top"));
-		var mainContainerPadBtm = parseInt(mainContainerStyle.getPropertyValue("padding-bottom"));
-
-		canvas.style.width = window.innerWidth - borderWidth - mainContainerPadLeft - mainContainerPadRight - rightAdContainer.getBoundingClientRect().width + "px";
-		canvas.style.height = window.innerHeight - borderHeight - mainContainerPadTop - mainContainerPadBtm - btmAdContainer.getBoundingClientRect().height + "px";
-	}
-
-	window.addEventListener("load", onLoad);
-	window.addEventListener("resize", onResize);
 
 </script>
 </body>

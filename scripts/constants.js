@@ -6,6 +6,7 @@ let enableFirebaseAnalytics = true;
 const AdProviderPlaywire = "Playwire";
 const AdProviderGoogleH5Games = "GoogleH5Games";
 const AdProviderAdinplay = "AdinPlay";
+const AdProviderDummy = "None";
 var displayAdProvider = AdProviderAdinplay;
 var videoAdProvider = AdProviderAdinplay;
 
@@ -17,6 +18,8 @@ var pwVideoScriptSrc = "scripts/ads-pw-video.js";
 var adinplayDisplayScriptSrc = "scripts/ads-adinplay-display.js";
 var adinplayVideoScriptSrc = "scripts/ads-adinplay-video.js";
 var googleH5GamesVideoScriptSrc = "scripts/ads-google-h5-games-video.js";
+var dummyDisplayScriptSrc = "scripts/ads-dummy-display.js";
+var dummyVideoScriptSrc = "scripts/ads-dummy-video.js";
 
 function isPlaywireEnabled()
 {

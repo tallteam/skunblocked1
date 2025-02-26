@@ -1,5 +1,13 @@
 'use strict';
 
+var btmAdContainer = document.getElementById("btmContainer");
+var btmAdPlaceholder = document.getElementById("btmAdPlaceholder");
+var btmAdResText = document.getElementById("btmAdResText");
+
+var rightAdContainer = document.getElementById("rightContainer");
+var rightAdPlaceholder = document.getElementById("rightAdPlaceholder");
+var rightAdResText = document.getElementById("rightAdResText");
+
 function displayingBtmAd()
 {
   return currBtmAdIndex >= 0;
